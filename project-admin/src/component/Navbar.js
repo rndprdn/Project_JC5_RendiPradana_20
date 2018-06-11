@@ -29,7 +29,7 @@ class Navbar extends Component {
                             <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Setting</a></li>
                             <li role="separator" className="divider" />
-                            <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+                            <li><Link to="/"><i class="fa fa-sign-out fa-fw"></i> Logout</Link></li>
                         </ul>
                     </li>
                 </ul>
