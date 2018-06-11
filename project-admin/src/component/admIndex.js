@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import Navbar from './Navbar';
+import Footer from './Footer';
+
 class admIndex extends Component {
   render() {
     return (
-      <div>
-          <div className="navbar-default sidebar" role="navigation">
+        <div>
+
+        <Navbar />
+
+        <div className="navbar-default sidebar" role="navigation">
             <div className="sidebar-nav navbar-collapse">
                 <ul className="nav" id="side-menu">
                 <li className="sidebar-search">
@@ -129,7 +135,11 @@ class admIndex extends Component {
                 </div>
             </div>
         </div>
-      </div>
+
+        <Footer />
+
+    </div>
+
     );
   }
 }

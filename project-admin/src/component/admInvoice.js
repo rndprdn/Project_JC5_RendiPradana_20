@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import Navbar from './Navbar';
+import Footer from './Footer';
+
 class admInvoice extends Component {
   render() {
     return (
       <div>
+
+        <Navbar />
+
         <div className="navbar-default sidebar" role="navigation">
             <div className="sidebar-nav navbar-collapse">
                 <ul className="nav" id="side-menu">
@@ -32,7 +38,7 @@ class admInvoice extends Component {
             </div>
         </div>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" style={{marginBottom: 123}}>
             <div className="row">
                 <div className="col-lg-12">
                 <h1 className="page-header">Tables</h1>
@@ -90,6 +96,9 @@ class admInvoice extends Component {
                 </div>
             </div>
         </div>
+
+        <Footer />
+
       </div>
     );
   }
