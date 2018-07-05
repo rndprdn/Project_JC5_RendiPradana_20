@@ -838,6 +838,14 @@ a:focus{
     margin-bottom: 40px;
 }
 
+.cards li{
+    float: left;
+    margin-right: 8px;
+}
+
+.cards li:hover{
+    cursor: pointer;
+}
 
 /*----------------------------*\
             invoice

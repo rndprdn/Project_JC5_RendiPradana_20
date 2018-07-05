@@ -134,10 +134,9 @@ class Checkout extends Component {
                                 <div className="col-md-12"><strong>Card Type:</strong></div>
                                 <div className="col-md-12">
                                     <select id="CreditCardType" name="CreditCardType" className="form-control">
-                                    <option value={5}>Visa</option>
-                                    <option value={6}>MasterCard</option>
-                                    <option value={7}>American Express</option>
-                                    <option value={8}>Discover</option>
+                                        <option value={5}>Visa</option>
+                                        <option value={6}>MasterCard</option>
+                                        <option value={7}>American Express</option>
                                     </select>
                                 </div>
                                 </div>
@@ -193,9 +192,9 @@ class Checkout extends Component {
                                 </div>
                                 <div className="col-md-12">
                                     <ul className="cards">
-                                    <li className="visa hand">Visa</li>
-                                    <li className="mastercard hand">MasterCard</li>
-                                    <li className="amex hand">Amex</li>
+                                        <li className="VISA hand"><img src='img/visa.png' /></li>
+                                        <li className="MC hand"><img src='img/mc.png' /></li>
+                                        <li className="AE hand"><img src='img/ae.png' /></li>
                                     </ul>
                                     <div className="clearfix" />
                                 </div>

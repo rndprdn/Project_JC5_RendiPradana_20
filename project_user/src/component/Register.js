@@ -13,7 +13,7 @@ class Register extends Component {
                         <div className="registration-left">    
                         <h2 className="text-left">New User? <span> Create An Account</span></h2>
                         <hr />
-                        <form>
+                        <form method='POST'>
                             <div className="form-group">
                             <input type="text" className="form-control" id="nama" placeholder="First Name" />
                             </div>

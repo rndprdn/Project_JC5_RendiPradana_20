@@ -21,31 +21,17 @@ class Navbar extends Component {
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                       <ul className="nav navbar-nav">
                         <li className="dropdown">
-                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clothing <span className="caret" /></a>
+                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wanita <span className="caret" /></a>
                           <ul className="dropdown-menu">
                             <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Men Clothing</a></li>
                             <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Women Clothing</a></li>
                           </ul>
                         </li>
                         <li className="dropdown">
-                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pants <span className="caret" /></a>
+                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pria <span className="caret" /></a>
                           <ul className="dropdown-menu">
                             <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Men Pants</a></li>
                             <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Women Pants</a></li>
-                          </ul>
-                        </li>
-                        <li className="dropdown">
-                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shoes <span className="caret" /></a>
-                          <ul className="dropdown-menu">
-                            <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Men Shoes</a></li>
-                            <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Women Shoes</a></li>
-                          </ul>
-                        </li>
-                        <li className="dropdown">
-                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bag <span className="caret" /></a>
-                          <ul className="dropdown-menu">
-                            <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Men Bag</a></li>
-                            <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Women Bag</a></li>
                           </ul>
                         </li>
                         <li className="dropdown">

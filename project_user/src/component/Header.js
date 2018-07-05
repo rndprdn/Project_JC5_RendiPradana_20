@@ -45,7 +45,7 @@ class Header extends Component {
                         </div>
                         <strong className="text-uppercase">My Account <span className="caret" /></strong>
                       </div>
-                      <a href="#" className="text-uppercase">Login</a>
+                      <Link to="/" className="text-uppercase">Login</Link>
                       <ul className="dropdown-menu">
                         <li><Link to="/Profile"><i className="fa fa-user-o" /> Profile</Link></li>
                         <li><Link to="/Checkout"><i className="fa fa-check" /> Checkout</Link></li>
