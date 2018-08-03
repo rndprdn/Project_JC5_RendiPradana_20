@@ -15,34 +15,25 @@ class Navbar extends Component {
                         <span className="icon-bar" />
                         <span className="icon-bar" />
                       </button>
-                      <Link to="/" className="navbar-brand">Home</Link>
+                      <Link to="/" className="navbar-brand">Beranda</Link>
                     </div>
                     {/* Collect the nav links, forms, and other content for toggling */}
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                       <ul className="nav navbar-nav">
                         <li className="dropdown">
-                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wanita <span className="caret" /></a>
-                          <ul className="dropdown-menu">
-                            <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Men Clothing</a></li>
-                            <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Women Clothing</a></li>
-                          </ul>
+                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produk</a>
+                        </li>
+                        <li>
+                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kontak Kami</a>
                         </li>
                         <li className="dropdown">
-                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pria <span className="caret" /></a>
-                          <ul className="dropdown-menu">
-                            <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Men Pants</a></li>
-                            <li><a href="#"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Women Pants</a></li>
-                          </ul>
-                        </li>
-                        <li className="dropdown">
-                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages <span className="caret" /></a>
-                          <ul className="dropdown-menu">
-                            <li><Link to="/ProductDetails"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Product Details</Link></li>
-                            <li><Link to="/ProductList"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> List Product</Link></li>
-                            <li><Link to="/Checkout"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> CheckOut</Link></li>
-                            <li><Link to="/Profile"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Profile</Link></li>
-                            <li><Link to="/Invoice"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Invoice</Link></li>
-                            <li><Link to="/Cart"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Cart</Link></li>
+                          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kategori <span className="caret" /></a>
+                          <ul className="dropdown-menu" style={{marginLeft: "0.1px"}}>
+                            <li><Link to="/ProductDetails"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Ghamis</Link></li>
+                            <li><Link to="/ProductList"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Jubba</Link></li>
+                            <li><Link to="/Checkout"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Kurta</Link></li>
+                            <li><Link to="/Profile"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Peci</Link></li>
+                            <li><Link to="/Invoice"><span className="glyphicon glyphicon-chevron-right" aria-hidden="true" /> Sirwal</Link></li>
                           </ul>
                         </li>
                       </ul>

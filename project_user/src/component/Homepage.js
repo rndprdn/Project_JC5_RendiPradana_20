@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import LoginModal from './LoginModal';
 
 class Homepage extends Component {
   render() {
@@ -7,15 +8,13 @@ class Homepage extends Component {
       <div>
         <div className="content">
           <div className="container">
-            {/* jumbo banner */}
+          <LoginModal />
             <div id="myCarousel" className="carousel slide" data-ride="carousel">
-              {/* Indicators */}
               <ol className="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to={0} className="active" />
                 <li data-target="#myCarousel" data-slide-to={1} />
                 <li data-target="#myCarousel" data-slide-to={2} />
               </ol>
-              {/* Wrapper for slides */}
               <div className="carousel-inner">
                 <div className="item active">
                   <img src="img/banner01.jpg" alt="Los Angeles" style={{width: '100%'}} />
@@ -27,7 +26,6 @@ class Homepage extends Component {
                   <img src="img/banner03.jpg" alt="New york" style={{width: '100%'}} />
                 </div>
               </div>
-              {/* Left and right controls */}
               <a className="left carousel-control" href="#myCarousel" data-slide="prev">
                 <span className="glyphicon glyphicon-chevron-left" />
                 <span className="sr-only">Previous</span>
@@ -37,9 +35,7 @@ class Homepage extends Component {
                 <span className="sr-only">Next</span>
               </a>
             </div>
-            {/* jumbo banner */}
             <div className="row">
-              {/* banner */}
               <div className="col-md-4 col-sm-6">
                 <a className="banner banner-1" href="#">
                   <img src="./img/banner10.jpg" alt />
@@ -48,8 +44,6 @@ class Homepage extends Component {
                   </div>
                 </a>
               </div>
-              {/* banner */}
-              {/* banner */}
               <div className="col-md-4 col-sm-6">
                 <a className="banner banner-1" href="#">
                   <img src="./img/banner11.jpg" alt />
@@ -58,8 +52,6 @@ class Homepage extends Component {
                   </div>
                 </a>
               </div>
-              {/* /banner */}
-              {/* banner */}
               <div className="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
                 <a className="banner banner-1" href="#">
                   <img src="./img/banner12.jpg" alt />
@@ -68,19 +60,14 @@ class Homepage extends Component {
                   </div>
                 </a>
               </div>
-              {/* /banner */}
             </div>
-            {/* product latest */}
             <div className="product-latest">
               <div className="row">
-                {/* product title */}
                 <div className="col-md-12">
                   <div className="section-title">
                     <h2 className="title">Latest Products</h2>
                   </div>
                 </div>
-                {/* product title */}
-                {/* Product Single */}
                 <div className="col-md-3 col-sm-6 col-xs-6">
                   <div className="product product-single">
                     <div className="product-thumb">
@@ -102,8 +89,6 @@ class Homepage extends Component {
                     </div>
                   </div>
                 </div>
-                {/* /Product Single */}
-                {/* Product Single */}
                 <div className="col-md-3 col-sm-6 col-xs-6">
                   <div className="product product-single">
                     <div className="product-thumb">
@@ -125,8 +110,6 @@ class Homepage extends Component {
                     </div>
                   </div>
                 </div>
-                {/* /Product Single */}
-                {/* Product Single */}
                 <div className="col-md-3 col-sm-6 col-xs-6">
                   <div className="product product-single">
                     <div className="product-thumb">
@@ -148,8 +131,6 @@ class Homepage extends Component {
                     </div>
                   </div>
                 </div>
-                {/* /Product Single */}
-                {/* Product Single */}
                 <div className="col-md-3 col-sm-6 col-xs-6">
                   <div className="product product-single">
                     <div className="product-thumb">
@@ -171,12 +152,8 @@ class Homepage extends Component {
                     </div>
                   </div>
                 </div>
-                {/* /Product Single */}
               </div>
-              {/* row */}
-              {/* row */}
               <div className="row">
-                {/* Product Single */}
                 <div className="col-md-3 col-sm-6 col-xs-6">
                   <div className="product product-single">
                     <div className="product-thumb">
@@ -198,8 +175,6 @@ class Homepage extends Component {
                     </div>
                   </div>
                 </div>
-                {/* /Product Single */}
-                {/* Product Single */}
                 <div className="col-md-3 col-sm-6 col-xs-6">
                   <div className="product product-single">
                     <div className="product-thumb">
@@ -221,8 +196,6 @@ class Homepage extends Component {
                     </div>
                   </div>
                 </div>
-                {/* Product Single */}
-                {/* Product Single */}
                 <div className="col-md-3 col-sm-6 col-xs-6">
                   <div className="product product-single">
                     <div className="product-thumb">
@@ -244,8 +217,6 @@ class Homepage extends Component {
                     </div>
                   </div>
                 </div>
-                {/* /Product Single */}
-                {/* Product Single */}
                 <div className="col-md-3 col-sm-6 col-xs-6">
                   <div className="product product-single">
                     <div className="product-thumb">
@@ -267,11 +238,8 @@ class Homepage extends Component {
                     </div>
                   </div>
                 </div>
-                {/* /Product Single */}
               </div>
-              {/* row */}
             </div>
-            {/* product latest */}
           </div>
         </div>
       </div>

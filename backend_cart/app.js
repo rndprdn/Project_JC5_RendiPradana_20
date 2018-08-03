@@ -18,7 +18,8 @@ const db = mysql.createConnection({
     user: 'root',
     password: '',
     database: 'mybrand',
-    port: '3306'
+    port: '3306',
+    multipleStatements: true
 });
 
 db.connect();
@@ -66,16 +67,28 @@ app.post('/deletedata', (req, res) => {
 
     var sql = `DELETE FROM produk WHERE id = ${produkID}`;
     db.query(sql, (err, result) => {
-        if(err) throw err;
-        console.log(result);
+        if(err){
+            throw err;
+        } else{
+            res.send(result);
+        }
     })
 })
 
-app.post('/form', (req, res) => {
-    var namaProduk = req.body.dataSatu;
-    var hargaProduk = req.body.dataDua;
+app.post('/kirimdata', (req, res) => {
+    var namaProduk = req.body.namaproduk;
+    var hargaProduk = req.body.hargaproduk;
+    var category = req.body.category;
+    var desk = req.body.deskripsi;
+    var size = req.body.sizeproduk;
+    var qty = req.body.quantity
 
-    var sql = `INSERT INTO produk (nama_produk, harga) VALUES ("${namaProduk}", "${hargaProduk}")`;
+    console.log(namaProduk)
+    console.log(hargaProduk)
+    console.log(category)
+    console.log(desk)
+
+    var sql = `INSERT INTO produk (nama_produk, harga, category_id, deskripsi) VALUES ("${namaProduk}", "${hargaProduk}", "${category}", "${desk}")`;
     db.query(sql, (err, result) => {
         if(err) throw err;
         res.end('Data berhasil disimpan...');
@@ -107,6 +120,19 @@ app.post('/login', (req, res) => {
                     res.send('Gagal');
                 }
             }
+        }
+    })
+})
+
+app.get('/formproduk', (req, res) => {
+    var sql = 'SELECT * FROM category_produk;'
+    sql +=  'SELECT * FROM size_chart'
+    db.query(sql, (err, result) => {
+        if(err){
+            throw err;
+        } else{
+            console.log(result);
+            res.send(result);
         }
     })
 })

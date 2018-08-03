@@ -13,6 +13,8 @@ import ProductDetails from '../src/component/ProductDetails';
 import ProductList from '../src/component/ProductList';
 import Invoice from '../src/component/Invoice';
 import Cart from '../src/component/Cart';
+import SideFilter from './component/SideFilter';
+import Login from './component/Login';
 
 class App extends Component {
   render() {
@@ -28,6 +30,7 @@ class App extends Component {
           <Route path="/ProductList" component={ProductList} />  
           <Route path="/Invoice" component={Invoice} />
           <Route path="/Cart" component={Cart} />
+          <Route path="/login" component={Login} />
         <Subscribe />
         <Footer />
       </div>

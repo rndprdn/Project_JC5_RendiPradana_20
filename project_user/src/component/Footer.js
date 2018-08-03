@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 class Footer extends Component {
   render() {
     return (
       <div>
         <footer id="footer" className="section section-grey">
-          {/* container */}
           <div className="container">
-            {/* row */}
             <div className="row">
-              {/* footer widget */}
               <div className="col-md-4 col-sm-6 col-xs-6">
                 <div className="footer">
-                  {/* footer logo */}
                   <div className="footer-logo">
-                    <a className="logo" href="#">
+                    <Link to="/" className="logo">
                       <img src="./img/logo.png" alt />
-                    </a>
+                    </Link>
                   </div>
                   {/* /footer logo */}
                   <h5>PT My Brand Indonesia.</h5>

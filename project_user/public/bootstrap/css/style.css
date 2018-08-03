@@ -30,6 +30,13 @@ hr{
 
 .header-top-links > li {
     display: inline-block;
+
+}
+
+.header-top-links > li h5:hover {
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: #ff6978;
 }
 
 .header-top-links > li+li {
@@ -43,11 +50,6 @@ hr{
 	-moz-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
 	transition: all 0.3s ease-in-out;
-}
-
-.header-top-links > li > a:hover {
-    color: #ff6978;
-    text-decoration: none;
 }
 
 /*----------------------------*\
@@ -713,20 +715,20 @@ a:focus{
     margin-bottom: 25px;
 }
 
-.cat-fil{
+.category-filter{
     margin-left: 5px;
     margin-bottom: 50px;
 }
 
-.cat-fil ul li{
+.category-filter ul li{
     padding-bottom: 10px;
 }
 
-.cat-fil ul li.active > a{
+.category-filter ul li.active > a{
     color: #ff6978;
 }
 
-.cat-fil ul li a{
+.category-filter ul li a{
     color: #888888;
     font-size: 15px;
     -webkit-transition: all 0.3s ease-in-out;
@@ -735,9 +737,10 @@ a:focus{
 	transition: all 0.3s ease-in-out;
 }
 
-.cat-fil ul li a:hover{
+.category-filter ul li a:hover{
     text-decoration: none;
     color: #ff6978;
+    cursor: pointer;
 }
 
 .filter h3{
