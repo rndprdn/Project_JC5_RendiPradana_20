@@ -20,8 +20,8 @@ export default class formProduk extends Component {
         .then((ambilData) => {
             console.log(ambilData.data)
             this.setState({
-                dataCategory: ambilData.data,
-                dataSize: ambilData.data
+                dataCategory: ambilData.data[0],
+                dataSize: ambilData.data[1]
             })
         })
     }
@@ -51,9 +51,14 @@ export default class formProduk extends Component {
         var idCategory = item.id;
         var categoryName = item.category;
 
-    
-
         return <option key={index} value={idCategory}>{categoryName}</option>
+    })
+
+    const size = this.state.dataSize.map((item, index) => {
+        var idSize = item.id;
+        var sizeList = item.size;
+
+        return <option key={index} value={idSize}>{sizeList}</option>
     })
 
 
@@ -99,7 +104,7 @@ export default class formProduk extends Component {
                                             <div className="col-sm-2">
                                                 <select ref={select => this.size = select} name="size" class="form-control">
                                                     <option selected disabled>-- Pilih Satu --</option>
-                                                    {/* {size} */}
+                                                    {size}
                                                 </select>
                                             </div>
                                         </div>
