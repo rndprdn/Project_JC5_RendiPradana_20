@@ -7,12 +7,14 @@ import ListProduk from './component/Listproduk';
 import formCategory from './component/formCategory';
 import FormProduk from './component/formProduk';
 import editForm from './component/editForm';
+import Data from './component/Data';
 
 class App extends Component {
   render() {
     return (
       <div>
         <Route exact path="/" component={Login} />
+        <Route path="/data" component={Data} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/listproduk" component={ListProduk} />
         <Route path="/formproduk" component={FormProduk} />

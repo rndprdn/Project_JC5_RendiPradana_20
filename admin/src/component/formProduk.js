@@ -10,8 +10,16 @@ export default class formProduk extends Component {
     state = {
         dataCategory: [],
         dataSize: [],
+        namaproduk: '',
+        hargaproduk: '',
         category: '',
         size: '',
+        gambarproduk1: '',
+        gambarproduk2: '',
+        gambarproduk3: '',
+        gambarproduk4: '',
+        desc: '',
+        qty: '',
         status: false
     }
 
@@ -26,39 +34,79 @@ export default class formProduk extends Component {
         })
     }
 
-    kirimData = (e) => {
-        axios.post('http://localhost:8000/kirimdata', {
-            namaproduk: e.namaproduk.value,
-            hargaproduk: e.hargaproduk.value,
-            category: this.category.value,
-            deskripsi: e.desc.value,
-            sizeproduk: this.sizeproduk.value,
-            quantity: e.qty.value
-        })
-        window.location.reload()
+    gambar = (e) => {
+      switch(e.target.name){
+        case 'gambarproduk': 
         this.setState({
-            status: true
+          gambarproduk1: e.target.files[0],
+          gambarproduk2: e.target.files[0]
         })
+        break;
+        default:
+      }
+    }
+
+    tampungData = (e) => {
+      var namaproduk = e.namaproduk.value;
+      var hargaproduk = e.hargaproduk.value;
+      var category = e.category.value;
+      var deskripsi = e.desc.value;
+      var sizeproduk = e.size.value;
+      var quantity = e.qty.value;
+
+      this.setState({
+        namaproduk: namaproduk,
+        hargaproduk: hargaproduk,
+        category: category,
+        size: sizeproduk,
+        desc: deskripsi,
+        qty: quantity
+      })
+    }
+
+    kirimData = (e) => {
+      e.preventDefault()
+      let formproduk = new FormData();
+      formproduk.append('categoryid', this.state.category);
+      formproduk.append('size', this.state.size);
+      formproduk.append('namaproduk', this.state.namaproduk);
+      formproduk.append('hargaproduk', this.state.hargaproduk);
+      formproduk.append('deskripsi', this.state.desc);
+      formproduk.append('qty', this.state.qty);
+      formproduk.append('gambarproduk1', this.state.gambarproduk1);
+      formproduk.append('gambarproduk2', this.state.gambarproduk2);
+      formproduk.append('gambarproduk3', this.state.gambarproduk3);
+      formproduk.append('gambarproduk4', this.state.gambarproduk4);
+
+      axios.post('http://localhost:8000/kirimdata', formproduk)
+      .then((hasil) => {
+        var respon = hasil.data; 
+        if(respon === 1){
+          this.setState({
+            status: true
+          })
+        }
+      })
     }
 
   render() {
 
     if(this.state.status === true){
-        return <Redirect to="/listproduk" />
+      return <Redirect to="/listproduk" />
     }
 
     const category = this.state.dataCategory.map((item, index) => {
-        var idCategory = item.id;
-        var categoryName = item.category;
+      var idCategory = item.id;
+      var categoryName = item.category;
 
-        return <option key={index} value={idCategory}>{categoryName}</option>
+      return <option key={index} value={idCategory}>- {categoryName}</option>
     })
 
     const size = this.state.dataSize.map((item, index) => {
-        var idSize = item.id;
-        var sizeList = item.size;
+      var idSize = item.id;
+      var sizeList = item.size;
 
-        return <option key={index} value={idSize}>{sizeList}</option>
+      return <option key={index} value={idSize}>- {sizeList}</option>
     })
 
 
@@ -82,7 +130,7 @@ export default class formProduk extends Component {
                                 <div className="box-header with-border">
                                     <h3 className="box-title">Produk</h3>
                                 </div>
-                                <form className="form-horizontal">
+                                <form className="form-horizontal" onSubmit={this.kirimData}>
                                     <div className="box-body">
                                         <div className="form-group">
                                             <label className="col-sm-2 control-label">Nama Produk :</label>
@@ -93,7 +141,7 @@ export default class formProduk extends Component {
                                         <div className="form-group">
                                             <label className="col-sm-2 control-label">Category :</label>
                                             <div className="col-sm-2">
-                                                <select ref={select => this.category = select} name="category" class="form-control">
+                                                <select ref="category" name="category" class="form-control">
                                                     <option selected disabled>-- Pilih Satu --</option>
                                                     {category}
                                                 </select>
@@ -102,7 +150,7 @@ export default class formProduk extends Component {
                                         <div className="form-group">
                                             <label className="col-sm-2 control-label">Size :</label>
                                             <div className="col-sm-2">
-                                                <select ref={select => this.size = select} name="size" class="form-control">
+                                                <select ref="size" name="size" class="form-control">
                                                     <option selected disabled>-- Pilih Satu --</option>
                                                     {size}
                                                 </select>
@@ -121,9 +169,27 @@ export default class formProduk extends Component {
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <label className="col-sm-2 control-label">Foto Produk :</label>
+                                            <label className="col-sm-2 control-label">Foto Produk1 :</label>
                                             <div className="col-sm-10">
-                                                <input type="file" className="form-control-file" />
+                                                <input type="file" name="gambarproduk1" ref="gambarproduk1" className="form-control-file" onChange={this.gambar} />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-2 control-label">Foto Produk2 :</label>
+                                            <div className="col-sm-10">
+                                                <input type="file" name="gambarproduk2" ref="gambarproduk2" className="form-control-file" onChange={this.gambar} />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-2 control-label">Foto Produk3 :</label>
+                                            <div className="col-sm-10">
+                                                <input type="file" name="gambarproduk3" ref="gambarproduk3" className="form-control-file" onChange={this.gambar} />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-2 control-label">Foto Produk4 :</label>
+                                            <div className="col-sm-10">
+                                                <input type="file" name="gambarproduk4" ref="gambarproduk4" className="form-control-file" onChange={this.gambar} />
                                             </div>
                                         </div>
                                         <div className="form-group">
@@ -134,7 +200,7 @@ export default class formProduk extends Component {
                                         </div>
                                     </div>
                                     <div className="box-footer">
-                                        <button type="button" onClick={() => this.kirimData(this.refs)} className="btn btn-success pull-right">Submit</button>
+                                        <button type="submit" onClick={() => this.tampungData(this.refs)} className="btn btn-success pull-right">Submit</button>
                                         <Link to="/listproduk" className="btn btn-danger">Cancel</Link>&nbsp;
                                     </div>
                                 </form>

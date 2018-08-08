@@ -5,25 +5,16 @@ export default class Sidebar extends Component {
   render() {
     return (
         <div>
-            <aside className="main-sidebar">
-                {/* sidebar: style can be found in sidebar.less */}
-                <section className="sidebar">
-                    {/* search form (Optional) */}
-                    <form className="sidebar-form">
-                        <div className="input-group">
-                            <input type="text" className="form-control" placeholder="Search..." />
-                            <span className="input-group-btn">
-                                <button type="submit" name="search" id="search-btn" className="btn btn-flat"><i className="fa fa-search" /></button>
-                            </span>
-                        </div>
-                    </form>
-                    <ul className="sidebar-menu" data-widget="tree">
-                        <li><Link to="/dashboard"><i className="fa fa-tachometer" /> <span>Dashboard</span></Link></li>
-                        <li><Link to="/listproduk"><i className="fa fa-table" /> <span>List Produk</span></Link></li>
-                        <li><Link to="/formproduk"><i class="fa fa-plus" aria-hidden="true"></i> <span>Tambah Produk</span></Link></li>
-                    </ul>
-                </section>
-            </aside>
+          <aside className="main-sidebar">
+            <section className="sidebar">
+              <ul className="sidebar-menu" data-widget="tree">
+                <li><Link to="/dashboard"><i className="fa fa-tachometer" /> <span>Dashboard</span></Link></li>
+                <li><Link to="/data"><i className="fa fa-database" /> <span>Data</span></Link></li>
+                <li><Link to="/listproduk"><i className="fa fa-table" /> <span>List Produk</span></Link></li>
+                <li><Link to="/formproduk"><i class="fa fa-plus" aria-hidden="true"></i> <span>Tambah Produk</span></Link></li>
+              </ul>
+            </section>
+          </aside>
         </div>
     )
   }

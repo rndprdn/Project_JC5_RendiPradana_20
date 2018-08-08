@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import Logo from './img/bewok.png';
 
 export default class componentName extends Component {
@@ -7,12 +8,12 @@ export default class componentName extends Component {
       <div>
         <header className="main-header">
           {/* Logo */}
-          <a href="index2.html" className="logo">
+          <Link to="/dashboard" className="logo">
             {/* mini logo for sidebar mini 50x50 pixels */}
             <span className="logo-mini"><b>M</b>B</span>
             {/* logo for regular state and mobile devices */}
             <span className="logo-lg"><b>MY</b> - BRAND</span>
-          </a>
+          </Link>
           {/* Header Navbar */}
           <nav className="navbar navbar-static-top" role="navigation">
             {/* Sidebar toggle button*/}

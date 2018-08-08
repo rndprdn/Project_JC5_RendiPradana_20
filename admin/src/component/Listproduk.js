@@ -15,6 +15,7 @@ export default class ListProduk extends Component {
   componentDidMount(){
     axios.get('http://localhost:8000/')
     .then((ambilData) => {
+      console.log(ambilData.data)
       this.setState({
         dataproduk: ambilData.data
       })
@@ -45,15 +46,23 @@ export default class ListProduk extends Component {
       var categoryId = item.category_id;
       var namaProduk = item.nama_produk;
       var hargaProduk = item.harga;
+      var descProduk = item.deskripsi;
+      var sizeProduk = item.size;
+      var qty = item.qty;
+      var fotoProduk = item.foto_produk;
 
       return <tr key={index} style={{textAlign: 'center'}}>
               <td>{nomor}</td>
               <td>{categoryId}</td>
               <td>{namaProduk}</td>
               <td>{hargaProduk}</td>
+              <td>{fotoProduk}</td>
+              <td>{descProduk}</td>
+              <td>{sizeProduk}</td>
+              <td>{qty}</td>
               <td style={{textAlign: 'left'}}>
                 <span>
-                  <Link to={{ pathname:'/editform', state: {produkId: produkId}}} className="btn btn-warning"><i class="fa fa-pencil-square-o"></i></Link>&nbsp;  
+                  <Link to={{ pathname:'/editform', state: {idproduk: produkId}}} className="btn btn-warning"><i class="fa fa-pencil-square-o"></i></Link>&nbsp;  
                   <button onClick={() => this.deleteData(produkId)} className="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>  
                 </span>   
               </td>
@@ -76,15 +85,19 @@ export default class ListProduk extends Component {
           <section className="content">
             <div className="row">
               <div className="col-xs-12">
-                <div className="box">
+                <div className="box box-info">
                   <div className="box-body">
-                    <table id="example1" className="table table-bordered table-striped">
+                    <table className="table table-bordered table-striped">
                       <thead>
                         <tr>
                           <th style={{textAlign: 'center'}}>No</th>
-                          <th style={{textAlign: 'center'}}>Category Id</th>
+                          <th style={{textAlign: 'center'}}>Category id</th>
                           <th style={{textAlign: 'center'}}>Nama Produk</th>
                           <th style={{textAlign: 'center'}}>Harga</th>
+                          <th style={{textAlign: 'center'}}>Foto Produk</th>
+                          <th style={{textAlign: 'center'}}>Deskripsi</th>
+                          <th style={{textAlign: 'center'}}>Size id</th>
+                          <th style={{textAlign: 'center'}}>Qty</th>
                           <th style={{textAlign: 'center'}}>Action</th>
                         </tr>
                       </thead>

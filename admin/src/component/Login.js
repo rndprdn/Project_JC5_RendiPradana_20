@@ -54,7 +54,7 @@ export default class Login extends Component {
                         <div className="login-content">
                             <div className="login-logo">
                                 <a href="#">
-                                <img src="images/icon/logo.png" alt="CoolAdmin" />
+                                    <img src="images/icon/logo.png" alt="CoolAdmin" />
                                 </a>
                             </div>
                             <div className="login-form">

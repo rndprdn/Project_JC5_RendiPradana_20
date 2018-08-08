@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 
 import Navbar from './Navbar';
@@ -7,18 +7,31 @@ import Sidebar from './Sidebar';
 
 export default class editForm extends Component {
 
-    state = {
+    constructor(props) {
+      super(props);
+      this.state = {
         id: '',
         idCategory: '',
         namaProduk: '',
         hargaProduk: '',
-        deskripsi: ''
+        deskripsi: '',
+        qty: '',
+        size: '',
+        status: false
+      };
+      this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange = (e) =>{
+      this.setState({
+        deskripsi: e.target.value
+      });
     }
 
     componentDidMount(){
         var id = this.props.location.state.idproduk;
         console.log(id);
-        axios.get('http://localhost:8000/editdata/'+ id)
+        axios.get('http://localhost:8000/editform/'+ id)
         .then((ambilData) => {
             console.log(ambilData.data);
             this.setState({
@@ -26,19 +39,35 @@ export default class editForm extends Component {
                 idCategory: ambilData.data[0].category_id,
                 namaProduk: ambilData.data[0].nama_produk,
                 hargaProduk: ambilData.data[0].harga,
-                deskripsi: ambilData.data[0].deskripsi
+                deskripsi: ambilData.data[0].deskripsi,
+                qty: ambilData.data[0].qty,
+                size: ambilData.data[0].size,
             })
         })
     }
 
     updateData = (e) => {
-        axios.post('http://localhost:8000/editdata', {
-            namaProduk: e.namaproduk.value,
-            hargaProduk: e.harga.value
-        })
+      // e.preventDefault();
+      // console.log(e.harga.value)
+      axios.post('http://localhost:8000/editform', {
+        idProduk: e.idproduk.value,
+        namaProduk: e.namaproduk.value,
+        hargaProduk: e.harga.value,
+        qty: e.qty.value,
+        deskripsi: e.desc.value
+      })
+      window.location.reload();
+      this.setState({
+        status: true
+      })
     }
 
   render() {
+
+    if(this.state.status === true){
+       return <Redirect to="/listproduk" />
+    }
+
     return (
         <div className="wrapper">
             <Navbar />
@@ -69,6 +98,18 @@ export default class editForm extends Component {
                                             </div>
                                         </div>
                                         <div className="form-group">
+                                            <label className="col-sm-2 control-label">Qty :</label>
+                                            <div className="col-sm-1">
+                                                <input ref="qty" type="number" className="form-control" defaultValue={this.state.qty} />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-2 control-label">Size :</label>
+                                            <div className="col-sm-1">
+                                                <input ref="size" type="number" className="form-control" defaultValue={this.state.size} disabled />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
                                             <label className="col-sm-2 control-label">Category :</label>
                                             <div className="col-sm-1">
                                                 <input ref="categoryid" type="number" className="form-control" defaultValue={this.state.idCategory} disabled />
@@ -89,12 +130,12 @@ export default class editForm extends Component {
                                         <div className="form-group">
                                             <label className="col-sm-2 control-label">Deskripsi :</label>
                                             <div className="col-sm-10">
-                                                <textarea className="form-control" value={this.state.deskripsi} />
+                                                <textarea ref="desc" className="form-control" value={this.state.deskripsi} onChange={this.handleChange} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="box-footer">
-                                        <button onClick={() => this.updateData(this.refs)} className="btn btn-success pull-right">Submit</button>
+                                        <button type="button" onClick={() => this.updateData(this.refs)} className="btn btn-success pull-right">Submit</button>
                                         <Link to="/listproduk" className="btn btn-danger">Cancel</Link>
                                     </div>
                                 </form>
