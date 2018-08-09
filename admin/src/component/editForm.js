@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+
+const cookies = new Cookies();
 
 export default class editForm extends Component {
 
@@ -63,6 +66,10 @@ export default class editForm extends Component {
     }
 
   render() {
+
+    if(cookies.get('data') === undefined){
+      return <Redirect to="/" />
+    }
 
     if(this.state.status === true){
        return <Redirect to="/listproduk" />

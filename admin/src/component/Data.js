@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+
+const cookies = new Cookies();
 
 export default class Data extends Component {
 
@@ -67,6 +70,10 @@ export default class Data extends Component {
   }
 
   render() {
+
+    if(cookies.get('data') === undefined){
+      return <Redirect to="/" />
+    }
 
     const category = this.state.dataCategory.map((item, index) => {
       var idCategory = item.id;

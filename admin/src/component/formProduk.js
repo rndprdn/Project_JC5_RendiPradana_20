@@ -92,7 +92,7 @@ export default class formProduk extends Component {
   render() {
 
     if(this.state.status === true){
-      return <Redirect to="/listproduk" />
+      return <Redirect to="/" />
     }
 
     const category = this.state.dataCategory.map((item, index) => {

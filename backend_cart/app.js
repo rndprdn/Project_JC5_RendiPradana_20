@@ -142,32 +142,30 @@ app.post('/kirimdata', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    var username = req.body.inputUsername;
-    var password = req.body.inputPassword;
+  var username = req.body.inputUsername;
+  var password = req.body.inputPassword;
 
-    // var passwordUser = password;
-    // var passwordEncrypt = crypto.createHash('sha256', secret).update(passwordUser).digest('hex');
+  // var passwordUser = password;
+  // var passwordEncrypt = crypto.createHash('sha256', secret).update(passwordUser).digest('hex');
 
-    // console.log(username);
-    // console.log(password);
-    
-    var sql = `SELECT * FROM newusers`;
-    db.query(sql, (err, result) => {
-        if(err){
-            throw err;
-        } else{
-            for(var i=0; i<result.length; i++){
-                if(username === result[i].Username && password === result[i].Password){
-                    var status = 'Oke';
-                    res.send(status);
-                    // console.log(status);
-                    break;
-                } else if(i === result.length - 1){
-                    res.send('Gagal');
-                }
-            }
+  var sql = `SELECT * FROM admin`;
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      for(var i=0; i<result.length; i++){
+        if(username === result[i].username && password === result[i].password){
+          console.log('login berhasil');
+          var userId = result[i].id
+          console.log(userId);  
+          res.send((userId).toString());
+          break;
+        } else if(i === result.length - 1){
+          console.log('login gagal');
         }
-    })
+      }
+    }
+  })
 })
 
 app.get('/formproduk', (req, res) => {

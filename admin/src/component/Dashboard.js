@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+
+import Cookies from 'universal-cookie';
 
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 
+const cookies = new Cookies();
+
 export default class Dashboard extends Component {
   render() {
+
+    if(cookies.get('data') === undefined){
+      return <Redirect to="/" />
+    }
+
     return (
       <div className="wrapper"> 
         <Navbar />

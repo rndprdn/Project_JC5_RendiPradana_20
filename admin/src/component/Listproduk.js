@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import Cookies from 'universal-cookie';
 
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 
+const cookies = new Cookies();
 
 export default class ListProduk extends Component {
 
@@ -39,6 +41,10 @@ export default class ListProduk extends Component {
   }
 
   render() {
+
+    if(cookies.get('data') === undefined){
+      return <Redirect to="/" />
+    }
 
     const hasil = this.state.dataproduk.map((item, index) => {
       var nomor = index + 1;
