@@ -8,6 +8,7 @@ const app = express();
 const port = 8000;
 const secret = 'maqlo';
 
+app.use('/tampunganGambar', express.static('tampunganGambar'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(cors());  
@@ -141,12 +142,9 @@ app.post('/kirimdata', (req, res) => {
     }
 });
 
-app.post('/login', (req, res) => {
+app.post('/loginadmin', (req, res) => {
   var username = req.body.inputUsername;
   var password = req.body.inputPassword;
-
-  // var passwordUser = password;
-  // var passwordEncrypt = crypto.createHash('sha256', secret).update(passwordUser).digest('hex');
 
   var sql = `SELECT * FROM admin`;
   db.query(sql, (err, result) => {
@@ -172,12 +170,12 @@ app.get('/formproduk', (req, res) => {
     var sql = 'SELECT * FROM category_produk;'
     sql +=  'SELECT * FROM size_chart'
     db.query(sql, (err, result) => {
-        if(err){
-            throw err;
-        } else{
-            // console.log(result);
-            res.send(result);
-        }
+      if(err){
+          throw err;
+      } else{
+          // console.log(result);
+          res.send(result);
+      }
     })
 })
 
@@ -229,6 +227,68 @@ app.post('/deletesize', (req, res) => {
       throw err;
     } else{
       res.send(result);
+    }
+  })
+})
+
+// USER BACKEND
+
+app.post('/createaccount', (req, res) => {
+  var namaDepan = req.body.namadepan;
+  var namaBelakang = req.body.namabelakang;
+  var username = req.body.username;
+  var email = req.body.email;
+  var password = req.body.password;
+
+  var passwordUser = password;
+  var passwordEncrypt = crypto.createHash('sha256', secret).update(passwordUser).digest('hex');
+
+  var sql = `INSERT INTO newusers (nama_depan, nama_belakang, username,	email, password) VALUES ("${namaDepan}", "${namaBelakang}", "${username}", "${email}", "${passwordEncrypt}")`;
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      console.log(result);
+    }
+  })
+})
+
+app.post('/loginuser', (req, res) => {
+  var username = req.body.username;
+  var password = req.body.password;
+
+  var passwordUser = password;
+  var passwordEncrypt = crypto.createHash('sha256', secret).update(passwordUser).digest('hex');
+
+  var sql = 'SELECT * FROM newusers';
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      for(var i=0; i<result.length; i++){
+        if(username === result[i].username && passwordEncrypt === result[i].password){
+          console.log('Login berhasil');
+          var userId = result[i].id;
+          console.log(userId);
+          res.send((userId).toString());
+        } else if(i === result.length - 1){
+          console.log('Login gagal');
+        }
+      }
+    }
+  })
+})
+
+app.post('/profileuser', (req, res) => {
+  var userId = req.body.idUser;
+
+  var sql = `SELECT * FROM newusers WHERE id = "${userId}"`;
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+      console.log(result);
     }
   })
 })

@@ -1,8 +1,44 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class Header extends Component {
+
+  state = {
+    namaDepan: '',
+    namaBelakang: '',
+    status: false
+  }
+
+  pindah = () => {
+    this.setState({
+      state: true
+    })
+    window.location.reload();
+  }
+
+  componentDidMount(){
+    let mycookie = cookies.get('userId');
+    axios.post('http://localhost:8000/profileuser', {
+      idUser: mycookie
+    }).then((Response) => {
+      var data = Response.data[0];
+      this.setState({
+        namaDepan: data.nama_depan,
+        namaBelakang: data.nama_belakang
+      })
+    })
+  }
+  
   render() {
+
+    if(this.state.status){
+      <Redirect to ="/logout" />
+    }
+
     return (
       <div>
         <header>
@@ -13,8 +49,8 @@ class Header extends Component {
               </div>
               <div className="pull-right">
                 <ul className="header-top-links">
-                  <li><Link to="/login"><h5>Login</h5></Link></li>
-                  <li><Link to="/register"><h5>Register</h5></Link></li>
+                  <li><Link to="/profile"><h5>Hi, {this.state.namaDepan}&nbsp;{this.state.namaBelakang}</h5></Link></li>
+                  <li><Link to="/logout" ><h5>Logout</h5></Link></li>
                 </ul>
               </div>
             </div>

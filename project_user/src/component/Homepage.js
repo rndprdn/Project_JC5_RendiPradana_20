@@ -17,10 +17,10 @@ class Homepage extends Component {
               </ol>
               <div className="carousel-inner">
                 <div className="item active">
-                  <img src="img/banner01.jpg" alt="Los Angeles" style={{width: '100%'}} />
+                  <img src="img/banner-lombok.jpg" alt="Los Angeles" style={{width: '100%'}} />
                 </div>
                 <div className="item">
-                  <img src="img/banner02.jpg" alt="Chicago" style={{width: '100%'}} />
+                  <img src="img/banner.jpg" alt="Chicago" style={{width: '100%'}} />
                 </div>
                 <div className="item">
                   <img src="img/banner03.jpg" alt="New york" style={{width: '100%'}} />
@@ -38,7 +38,7 @@ class Homepage extends Component {
             <div className="row">
               <div className="col-md-4 col-sm-6">
                 <a className="banner banner-1" href="#">
-                  <img src="./img/banner10.jpg" alt />
+                  <img src="./img/banner10.jpg" />
                   <div className="banner-caption text-center">
                     <h2 className="white-color">NEW COLLECTION</h2>
                   </div>

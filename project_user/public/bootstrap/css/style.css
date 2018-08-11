@@ -39,6 +39,10 @@ hr{
     color: #ff6978;
 }
 
+.header-top-links > li > a:hover {
+  text-decoration: none;
+}
+
 .header-top-links > li+li {
     margin-left: 15px;
 }

@@ -14,7 +14,7 @@ export default class Login extends Component {
     login = (e) => {
       var username = e.username.value;
       var password = e.password.value;
-      axios.post('http://localhost:8000/login', {
+      axios.post('http://localhost:8000/loginadmin', {
         inputUsername: username,
         inputPassword: password
       }).then((Response) => {
