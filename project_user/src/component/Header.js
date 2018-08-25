@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 class Header extends Component {
   render() {
@@ -9,7 +10,7 @@ class Header extends Component {
           <div id="top-header">
             <div className="container">
               <div className="pull-left">
-                <span>Welcome to My Brand!</span>
+                <span>Welcome to SAMASE - JKT !</span>
               </div>
               <div className="pull-right">
                 <ul className="header-top-links">

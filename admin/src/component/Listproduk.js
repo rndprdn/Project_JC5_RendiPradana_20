@@ -27,8 +27,7 @@ export default class ListProduk extends Component {
   deleteData = (e) => {
     axios.post('http://localhost:8000/deletedata/', {
       idProduk: e
-    })
-    .then((ambilData) => {
+    }).then((ambilData) => {
       if(ambilData){
         axios.get('http://localhost:8000/')
         .then((ambilData) => {
@@ -42,7 +41,7 @@ export default class ListProduk extends Component {
 
   render() {
 
-    if(cookies.get('data') === undefined){
+    if(cookies.get('userID') === undefined){
       return <Redirect to="/" />
     }
 

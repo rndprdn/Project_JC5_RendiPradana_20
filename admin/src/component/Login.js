@@ -20,7 +20,7 @@ export default class Login extends Component {
       }).then((Response) => {
         var data = Response.userId;
         console.log(data);
-        cookies.set('data', data, {path: '/'});
+        cookies.set('userID', data, {path: '/'});
         this.setState({
           statusRedirect: true
         })

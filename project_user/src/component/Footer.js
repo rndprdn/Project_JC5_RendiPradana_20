@@ -12,17 +12,14 @@ class Footer extends Component {
                 <div className="footer">
                   <div className="footer-logo">
                     <Link to="/" className="logo">
-                      <img src="./img/logo.png" alt />
+                      <img src="./img/logo.png" alt="logo" />
                     </Link>
                   </div>
-                  <h5>PT My Brand Indonesia.</h5>
+                  <h5> Samse Jakarta.</h5>
                   <h5>Jl. Songsi 1 Dalam, Jakarta Barat, Jakarta 11210</h5>
                   <ul className="footer-social">
-                    <li><a href="#"><i className="fa fa-facebook" /></a></li>
-                    <li><a href="#"><i className="fa fa-twitter" /></a></li>
+                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i className="fa fa-instagram" /></a></li>
-                    <li><a href="#"><i className="fa fa-google-plus" /></a></li>
-                    <li><a href="#"><i className="fa fa-pinterest" /></a></li>
                   </ul>
                 </div>
               </div>
@@ -49,7 +46,7 @@ class Footer extends Component {
             <div className="row">
               <div className="col-md-8 col-md-offset-2 text-center">
                 <div className="footer-copyright">
-                  Copyright ©  All Rights Reserved <i className="fa fa-heart-o" aria-hidden="true" /> by <a href="https://www.facebook.com/Skate473" target="_blank">Rendi Pradana</a>
+                  Copyright ©  All Rights Reserved <Link to="/" target="_blank">Samse Jakarta</Link>
                 </div>
               </div>
             </div>

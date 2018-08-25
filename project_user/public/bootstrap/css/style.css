@@ -63,6 +63,7 @@ hr{
 .header-logo {
     display: inline-block;
     margin-right: 15px;
+    padding-top: 30px;
 }
 
 .header-logo .logo>img {
@@ -157,11 +158,7 @@ hr{
     color: #30323A;
     background-color: #FFF;
     border: 1px solid #DADADA;
-}
-
-.dropdown-menu li{
-    padding: 10px;
-}
+} 
 
 a:focus{
     text-decoration: none;
@@ -328,7 +325,6 @@ a:focus{
 
 .open > .dropdown-menu {
     display: block;
-    margin-left: -10px;
 }
 
 
@@ -415,6 +411,14 @@ a:focus{
 	    Single product
 \*----------------------------*/
 
+.product-box h3 {
+  color: black;
+}
+
+.product-box:hover {
+  text-decoration: none;
+}
+
 .product.product-single {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -475,17 +479,8 @@ a:focus{
     font-size: 16px;
 }
 
-.product.product-single .product-name a {
-    color: #000;
-    -webkit-transition: all 0.3s ease-in-out;
-	-moz-transition: all 0.3s ease-in-out;
-	-o-transition: all 0.3s ease-in-out;
-	transition: all 0.3s ease-in-out;
-
-}
-.product.product-single .product-name a:hover {
-    text-decoration: none;
-    color: #ff6978;
+.product.product-single .product-name {
+  color: #000;
 }
   
 .product.product-single .product-btns button {
@@ -607,7 +602,7 @@ a:focus{
 }
   
 .footer-logo .logo>img {
-    width: 100%;
+    width: 50%;
     max-height: 70px;
 }
 
@@ -726,22 +721,10 @@ a:focus{
 
 .category-filter ul li{
     padding-bottom: 10px;
+    transition: all 0.3s ease-in-out;
 }
 
-.category-filter ul li.active > a{
-    color: #ff6978;
-}
-
-.category-filter ul li a{
-    color: #888888;
-    font-size: 15px;
-    -webkit-transition: all 0.3s ease-in-out;
-	-moz-transition: all 0.3s ease-in-out;
-	-o-transition: all 0.3s ease-in-out;
-	transition: all 0.3s ease-in-out;
-}
-
-.category-filter ul li a:hover{
+.category-filter ul li:hover{
     text-decoration: none;
     color: #ff6978;
     cursor: pointer;

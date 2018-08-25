@@ -17,7 +17,7 @@ class Login extends Component {
       password: e.password.value
     }).then((Response) => {
       var userId = Response.data;
-      cookies.set('userId', userId, {path: '/'});
+      cookies.set('userID', userId, {path: '/'});
       this.setState({
         status: true
       })

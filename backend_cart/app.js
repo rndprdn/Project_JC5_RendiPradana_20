@@ -94,42 +94,23 @@ app.post('/kirimdata', (req, res) => {
     var desk = req.body.deskripsi;
     var size = req.body.size;
     var qty = req.body.qty;
-    var gambarProduk1 = req.files.gambarproduk1.name;
-    var gambarProduk2 = req.files.gambarproduk2.name;
+    var gambarProduk = req.files.gambarproduk.name;
 
-    console.log(gambarProduk1);
+    // console.log(gambarProduk);
     // console.log(hargaProduk)
     // console.log(category)
     // console.log(desk)
 
-    if(namaProduk !== '' && hargaProduk !== '' && category !== '' && desk !== '' && size !== '' && qty !== '' && gambarProduk1 !== '' && gambarProduk2 !== ''){
-      var tampungGambar1 = req.files.gambarproduk1;
-      var tampungGambar2 = req.files.gambarproduk2;
-      tampungGambar1.mv('./tampunganGambar/' + gambarProduk1, (err) => {
+    if(namaProduk !== '' && hargaProduk !== '' && category !== '' && desk !== '' && size !== '' && qty !== '' && gambarProduk !== ''){
+      var tampungGambar = req.files.gambarproduk;
+      tampungGambar.mv('./tampunganGambar/' + gambarProduk, (err) => {
         if(err){
           console.log('Upload gagal!');
         } else{
           console.log('Upload berhasil!');
 
           var sql = `INSERT INTO produk (nama_produk, harga, foto_produk, category_id, deskripsi, size, qty) 
-                     VALUES ("${namaProduk}", "${hargaProduk}", "${gambarProduk1}", "${category}", "${desk}", "${size}", "${qty}")`;
-          db.query(sql, (err, result) => {
-            if(err){
-              throw err;
-            } else{
-              res.send('1');
-            }
-          })
-        }
-      })
-      tampungGambar2.mv('./tampunganGambar/' + gambarProduk2, (err) => {
-        if(err){
-          console.log('Upload gagal!');
-        } else{
-          console.log('Upload berhasil!');
-
-          var sql = `INSERT INTO produk (foto_produk) 
-                     VALUES ("${gambarProduk2}")`;
+                     VALUES ("${namaProduk}", "${hargaProduk}", "${gambarProduk}", "${category}", "${desk}", "${size}", "${qty}")`;
           db.query(sql, (err, result) => {
             if(err){
               throw err;
@@ -288,7 +269,140 @@ app.post('/profileuser', (req, res) => {
       throw err;
     } else{
       res.send(result);
-      console.log(result);
+    }
+  })
+})
+
+// menarik category id untuk memfilter di product list
+app.get('/categoryfilter', (req, res) => {
+  var sql = 'SELECT * FROM category_produk';
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
+})
+
+// mengirim id category dari frontEnd ke backEnd untuk menarik produk sesuai id yang di kirim untuk memfilter produk
+app.post('/produkfilter', (req, res) => {
+  var categoryid = req.body.categoryId;
+
+  console.log(categoryid);
+  if(categoryid === 6){
+    var sql = `SELECT * FROM produk`;
+    db.query(sql, (err,  result) => {
+      if(err){
+        throw err;
+      } else{
+        res.send(result);
+      }
+    })
+  } else{
+    var sql = `SELECT * FROM produk WHERE category_id = "${categoryid}"`;
+    db.query(sql, (err,  result) => {
+      if(err){
+        throw err;
+      } else{
+        res.send(result);
+      }
+    })
+  }
+})
+
+app.get('/allproduk', (req, res) => {
+  var sql = `SELECT * FROM produk`;
+  db.query(sql, (err,  result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
+})
+
+app.get('/bestproduct', (req, res) => {
+  var sql = 'SELECT * FROM produk WHERE category_id=1 LIMIT 1;'
+  sql += 'SELECT * FROM produk WHERE category_id=2 LIMIT 1;'
+  sql += 'SELECT * FROM produk WHERE category_id=3 LIMIT 1;'
+  sql += 'SELECT * FROM produk WHERE category_id=4 LIMIT 1;'
+  db.query(sql, (err,  result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
+})
+
+app.post('/productdetail', (req, res) => {
+  var idproduk = req.body.idproduk;
+
+  var sql = `SELECT produk.id, nama_produk, harga, foto_produk, deskripsi, size_chart.size, qty FROM produk JOIN category_produk ON produk.category_id=category_produk.id JOIN size_chart ON produk.size = size_chart.id WHERE produk.id = "${idproduk}"`;
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
+})
+
+app.post('/cart', (req, res) => {
+  var idproduk = req.body.idproduk;
+  var userid  = req.body.userID;
+  
+  console.log(idproduk);
+  console.log(userid);
+
+  var sql = `SELECT * FROM produk WHERE id="${idproduk}"`;
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      var userID = userid;
+      var produkid = idproduk;
+      var namaproduk = result[0].nama_produk;
+      var fotoproduk = result[0].foto_produk;
+      var desk = result[0].deskripsi;
+      var harga = result[0].harga;
+      var size = result[0].size;
+
+      var sql2 = `INSERT INTO cart (id_user, product_id, nama_produk, foto_produk, desk, harga, size) VALUES ("${userID}", "${produkid}", "${namaproduk}", "${fotoproduk}", "${desk}", "${harga}", "${size}")`;
+      db.query(sql2, (err, result) => {
+        if(err){
+          throw err;
+        } else{
+          console.log('Data berhasil disimpan!');
+        }
+      })
+    }
+  })
+})
+
+app.post('/datacart', (req, res) => {
+  var iduser = req.body.id;
+
+  var sql = `SELECT * FROM cart WHERE id_user="${iduser}"`;
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
+})
+
+app.post('/jumlahcart', (req, res) => {
+  var userid = req.body.userID;
+
+  var sql = `SELECT count(*) AS jumlah FROM cart WHERE id_user="${userid}"`;
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err
+    } else{
+      res.send(result);
     }
   })
 })

@@ -71,7 +71,7 @@ export default class Data extends Component {
 
   render() {
 
-    if(cookies.get('data') === undefined){
+    if(cookies.get('userID') === undefined){
       return <Redirect to="/" />
     }
 

@@ -6,9 +6,9 @@ export default class Logout extends Component {
   render() {
 
     const cookies = new Cookies();
-    cookies.remove('data');
+    cookies.remove('userID');
 
-    if(cookies.get('data') === undefined){
+    if(cookies.get('userID') === undefined){
       return <Redirect to="/" />
     }
 

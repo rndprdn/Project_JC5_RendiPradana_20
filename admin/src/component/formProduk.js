@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+
+const cookies = new Cookies();
 
 export default class formProduk extends Component {
 
@@ -14,13 +17,9 @@ export default class formProduk extends Component {
         hargaproduk: '',
         category: '',
         size: '',
-        gambarproduk1: '',
-        gambarproduk2: '',
-        gambarproduk3: '',
-        gambarproduk4: '',
+        gambarproduk: '',
         desc: '',
         qty: '',
-        status: false
     }
 
     componentDidMount(){
@@ -38,8 +37,7 @@ export default class formProduk extends Component {
       switch(e.target.name){
         case 'gambarproduk': 
         this.setState({
-          gambarproduk1: e.target.files[0],
-          gambarproduk2: e.target.files[0]
+          gambarproduk: e.target.files[0],
         })
         break;
         default:
@@ -53,7 +51,6 @@ export default class formProduk extends Component {
       var deskripsi = e.desc.value;
       var sizeproduk = e.size.value;
       var quantity = e.qty.value;
-
       this.setState({
         namaproduk: namaproduk,
         hargaproduk: hargaproduk,
@@ -73,25 +70,15 @@ export default class formProduk extends Component {
       formproduk.append('hargaproduk', this.state.hargaproduk);
       formproduk.append('deskripsi', this.state.desc);
       formproduk.append('qty', this.state.qty);
-      formproduk.append('gambarproduk1', this.state.gambarproduk1);
-      formproduk.append('gambarproduk2', this.state.gambarproduk2);
-      formproduk.append('gambarproduk3', this.state.gambarproduk3);
-      formproduk.append('gambarproduk4', this.state.gambarproduk4);
+      formproduk.append('gambarproduk', this.state.gambarproduk);
 
       axios.post('http://localhost:8000/kirimdata', formproduk)
-      .then((hasil) => {
-        var respon = hasil.data; 
-        if(respon === 1){
-          this.setState({
-            status: true
-          })
-        }
-      })
+      window.location.reload();
     }
 
   render() {
 
-    if(this.state.status === true){
+    if(cookies.get('userID') === undefined){
       return <Redirect to="/" />
     }
 
@@ -171,10 +158,10 @@ export default class formProduk extends Component {
                                         <div className="form-group">
                                             <label className="col-sm-2 control-label">Foto Produk1 :</label>
                                             <div className="col-sm-10">
-                                                <input type="file" name="gambarproduk1" ref="gambarproduk1" className="form-control-file" onChange={this.gambar} />
+                                                <input type="file" name="gambarproduk" ref="gambarproduk" className="form-control-file" onChange={this.gambar} />
                                             </div>
                                         </div>
-                                        <div className="form-group">
+                                        {/* <div className="form-group">
                                             <label className="col-sm-2 control-label">Foto Produk2 :</label>
                                             <div className="col-sm-10">
                                                 <input type="file" name="gambarproduk2" ref="gambarproduk2" className="form-control-file" onChange={this.gambar} />
@@ -191,7 +178,7 @@ export default class formProduk extends Component {
                                             <div className="col-sm-10">
                                                 <input type="file" name="gambarproduk4" ref="gambarproduk4" className="form-control-file" onChange={this.gambar} />
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="form-group">
                                             <label className="col-sm-2 control-label">Deskripsi :</label>
                                             <div className="col-sm-10">

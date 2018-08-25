@@ -8,6 +8,7 @@ const cookies = new Cookies();
 class Header extends Component {
 
   state = {
+    data: [],
     namaDepan: '',
     namaBelakang: '',
     status: false
@@ -21,7 +22,7 @@ class Header extends Component {
   }
 
   componentDidMount(){
-    let mycookie = cookies.get('userId');
+    var mycookie = cookies.get('userID');
     axios.post('http://localhost:8000/profileuser', {
       idUser: mycookie
     }).then((Response) => {
@@ -32,6 +33,17 @@ class Header extends Component {
       })
     })
   }
+
+  componentWillMount(){
+    var mycookie = cookies.get('userID');
+    axios.post('http://localhost:8000/jumlahcart', {
+      userID: mycookie
+    }).then((ambilData) => {
+      this.setState({
+        data: ambilData.data
+      })
+    })
+  }
   
   render() {
 
@@ -39,13 +51,19 @@ class Header extends Component {
       <Redirect to ="/logout" />
     }
 
+    const jumlahcart = this.state.data.map((item, index) => {
+      var jumlah = item.jumlah;
+
+      return <span className="qty">{jumlah}</span>
+    })
+
     return (
       <div>
         <header>
           <div id="top-header">
             <div className="container">
               <div className="pull-left">
-                <span>Welcome to My Brand!</span>
+                <span>Welcome to SAMASE - JKT !</span>
               </div>
               <div className="pull-right">
                 <ul className="header-top-links">
@@ -71,7 +89,7 @@ class Header extends Component {
                       <div href="#">
                         <div className="header-btn-icon">
                           <i className="fa fa-shopping-cart" />
-                          <span className="qty">0</span>
+                          {jumlahcart}
                         </div>
                       </div>
                     </li>
