@@ -56,6 +56,7 @@ export default class editForm extends Component {
         idProduk: e.idproduk.value,
         namaProduk: e.namaproduk.value,
         hargaProduk: e.harga.value,
+        fotoproduk: e.fotoproduk.value,
         qty: e.qty.value,
         deskripsi: e.desc.value
       })
@@ -131,7 +132,7 @@ export default class editForm extends Component {
                                         <div className="form-group">
                                             <label className="col-sm-2 control-label">Foto Produk :</label>
                                             <div className="col-sm-10">
-                                                <input ref="" type="file" className="form-control-file" />
+                                                <input ref="fotoproduk" type="file" className="form-control-file" />
                                             </div>
                                         </div>
                                         <div className="form-group">

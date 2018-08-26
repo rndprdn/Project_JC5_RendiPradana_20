@@ -48,6 +48,7 @@ app.get('/', (req, res) => {
 app.post('/editform', (req, res) => {
     var updateNamaProduk = req.body.namaProduk;
     var updateHargaProduk = req.body.hargaProduk;
+    var updateFotoProduk = req.body.fotoproduk;
     var updateQtyProduk = req.body.qty;
     var updateDescProduk = req.body.deskripsi;
     var id = req.body.idProduk;
@@ -374,17 +375,19 @@ app.post('/cart', (req, res) => {
         if(err){
           throw err;
         } else{
-          console.log('Data berhasil disimpan!');
+          res.send('1');
         }
       })
     }
   })
 })
 
+// get data cart untuk ditampilkan di component cart sesuai id user yg sedang login saat itu
 app.post('/datacart', (req, res) => {
   var iduser = req.body.id;
 
-  var sql = `SELECT * FROM cart WHERE id_user="${iduser}"`;
+  var sql = `SELECT cart.id, id_user, product_id, nama_produk, foto_produk, desk, harga, size_chart.size, qty FROM cart JOIN size_chart ON cart.size = size_chart.id WHERE id_user="${iduser}";`
+  sql += `SELECT id, harga*qty AS "subTotalPrice" FROM cart WHERE id_user="${iduser}"`
   db.query(sql, (err, result) => {
     if(err){
       throw err;
@@ -394,6 +397,7 @@ app.post('/datacart', (req, res) => {
   })
 })
 
+// menghitung jumlah cart menggunakan query count
 app.post('/jumlahcart', (req, res) => {
   var userid = req.body.userID;
 
@@ -405,6 +409,108 @@ app.post('/jumlahcart', (req, res) => {
       res.send(result);
     }
   })
+})
+
+// untuk mengupdate item cart
+app.post('/updatecart', (req, res) => {
+  var userID = req.body.userID;
+  var newQty = req.body.newQty;
+  var cartID = req.body.cartID;
+
+  var updateCart = `UPDATE cart SET qty="${newQty}" WHERE id="${cartID}"`;
+  db.query(updateCart, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      var reTake = `SELECT * FROM cart WHERE id_user="${userID}";` // retake the cart list
+      reTake += `SELECT id, harga*qty AS "subTotalPrice" FROM cart WHERE id_user="${userID}"`
+      db.query(reTake, (err, result) => {
+        if(err){
+          throw err;
+        } else{
+          res.send(result);
+        }
+      })
+    }
+  })
+})
+
+// untuk menghapus item di cart
+app.post('/deletecart', (req, res) => {
+  userid = req.body.iduser;
+  idcart = req.body.idcart;
+
+  var sql = `DELETE FROM cart WHERE id_user="${userid}" AND id="${idcart}"`;
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
+})
+
+// get data untuk ditampilkan di checkout
+app.post('/cartCO', (req, res) => {
+  var iduser = req.body.iduser;
+
+  var sql = `SELECT id, nama_produk, foto_produk, qty, harga FROM cart WHERE id_user="${iduser}";`
+  sql += `SELECT harga*qty AS "subTotalPrice" FROM cart WHERE id_user="${iduser}";`
+  sql += 'SELECT * FROM payment_method;'
+  sql += 'SELECT * FROM delivery_method';
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
+})
+
+app.post('/checkout', (req, res) => {
+  var namalengkap = req.body.namalengkap;
+  var alamat = req.body.alamat;
+  var kota = req.body.kota;
+  var negara = req.body.negara;
+  var kodepos = req.body.kodepos;
+  var nohp = req.body.nohp;
+  var email = req.body.email;
+  var payment = req.body.payment;
+  var delivery = req.body.delivery;
+  var listcart = req.body.listcart;
+
+  // console.log(namalengkap)
+  // console.log(alamat)
+  // console.log(kota)
+  // console.log(negara)
+  // console.log(kodepos)
+  // console.log(nohp)
+  // console.log(email)
+  // console.log(payment)
+  // console.log(delivery)
+  // console.log(listcart) 
+
+  var count = 0;
+
+  for(var i=0; i<listcart.length; i++){
+    var namaproduk = listcart[i].nama_produk;
+    var hargabarang = listcart[i].harga;
+    var qty = listcart[i].qty;
+    var subtotal = listcart[i].harga*listcart[i].qty;
+
+    var sql = `INSERT INTO invoice (nama_lengkap,	alamat,	kota,	negara,	kodepos, no_hp, email, payment, delivery, nama_produk, qty, harga_barang, subtotal) VALUES ("${namalengkap}", "${alamat}", "${kota}", "${negara}", "${kodepos}", "${nohp}", "${email}", "${payment}", "${delivery}", "${namaproduk}", "${qty}", "${hargabarang}", "${subtotal}")`;
+    db.query(sql, (err, result) => {
+      if(err){
+        throw err;
+      } else{
+        count++
+        // console.log(result);
+        if(count === listcart.length){
+          res.send('1')
+        }
+      }
+    })
+  }
 })
 
 app.listen(port, (req, res) => {

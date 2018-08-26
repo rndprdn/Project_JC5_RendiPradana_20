@@ -8,7 +8,11 @@ const cookies = new Cookies();
 class Cart extends Component {
 
   state = {
-    produk: []
+    produk: [],
+    subPrice: [],
+    detailCart: [],
+    grandTotal: 0,
+    iduser: cookies.get('userID')
   }
 
   componentWillMount(){
@@ -17,8 +21,60 @@ class Cart extends Component {
       id: iduser
     }).then((ambilData) => {
       this.setState({
-        produk: ambilData.data
+        produk: ambilData.data[0],
+        subPrice: ambilData.data[1]
       })
+      var Alltotal = 0;
+      var listPrice = this.state.subPrice
+      for (var i=0; i<listPrice.length; i++)
+      {
+          Alltotal = Alltotal + listPrice[i].subTotalPrice
+      }
+      
+      this.setState({
+          grandTotal: Alltotal
+      })
+    })
+  }
+
+  updateQty = (e, id) => {
+    var userid = cookies.get('userID');
+    axios.post('http://localhost:8000/updatecart', {
+      newQty: e,
+      cartID: id,
+      userID: userid
+    }).then((ambilData) => {
+      this.setState({
+        detailCart: ambilData.data[0],
+        subPrice: ambilData.data[1]
+      })
+      var Alltotal = 0;
+      var listPrice = this.state.subPrice
+      for (var i=0; i<listPrice.length; i++)
+      {
+          Alltotal = Alltotal + listPrice[i].subTotalPrice
+      }
+      
+      this.setState({
+          grandTotal: Alltotal
+      })
+    })
+  }
+
+  deleteCart = (e) => {
+    var userID = cookies.get('userID');
+    axios.post('http://localhost:8000/deletecart', {
+      iduser: userID,
+      idcart: e
+    }).then((ambilData) => {
+      if(ambilData){
+        axios.get('http://localhost:8000/datacart')
+        .then((ambilData) => {
+          this.setState({
+            dataproduk: ambilData.data
+          })
+        })
+      }
     })
   }
 
@@ -29,28 +85,32 @@ class Cart extends Component {
     }
 
     const produkCart = this.state.produk.map((item, index) => {
+      var idcart = item.id;
       var namaproduk = item.nama_produk;
       var fotoproduk = item.foto_produk;
-      var desk = item.deskripsi;
+      var desk = item.desk;
       var harga = item.harga;
       var size = item.size;
+      var qty = item.qty;
 
-      return <div key={index} className="row">
-              <div className="col-xs-2"><img className="img-responsive" src={'http://localhost:8000/tampunganGambar/' + fotoproduk} /></div>
-              <div className="col-xs-4">
-                <h4 className="product-name"><strong>{namaproduk}</strong></h4><h4><small>{desk}</small></h4>
-              </div>
-              <div className="col-xs-6">
-                <div className="col-xs-6 text-right">
-                  <h6><strong>Rp.{harga}<span className="text-muted"> x</span></strong></h6>
+      return <div key={index} value={idcart}>
+              <div className="row">
+                <div className="col-xs-2"><img className="img-responsive" src={'http://localhost:8000/tampunganGambar/' + fotoproduk} /></div>
+                <div className="col-xs-4">
+                  <h4 className="product-name"><strong>{namaproduk}</strong></h4><h4><small>{desk}</small></h4><h4><small>Size: {size}</small></h4>
                 </div>
-                <div className="col-xs-2">
-                  <input type="number" className="form-control input-sm" defaultValue={1} />
-                </div>
-                <div className="col-xs-2">
-                  <button type="button" className="btn btn-link btn-xs">
-                    <span className="glyphicon glyphicon-trash"> </span>
-                  </button>
+                <div className="col-xs-6">
+                  <div className="col-xs-6 text-right">
+                    <h6><strong>Rp. {harga}<span className="text-muted"> x</span></strong></h6>
+                  </div>
+                  <div className="col-xs-2">
+                    <input type="number" className="form-control input-sm" min={1} defaultValue={qty} onChange={(e) => this.updateQty(e.target.value, idcart)} />
+                  </div>
+                  <div className="col-xs-2">
+                    <button type="button" className="btn btn-link btn-xs">
+                      <span onClick={() => this.deleteCart(idcart)} className="glyphicon glyphicon-trash"> </span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -89,10 +149,10 @@ class Cart extends Component {
                 <div className="panel-footer">
                   <div className="row text-center">
                     <div className="col-xs-8">
-                      <h4 className="text-right">Total <strong>$50.00</strong></h4>
+                      <h4 className="text-right">Total <strong>Rp. {this.state.grandTotal}</strong></h4>
                     </div>
                     <div className="col-xs-4">
-                      <button type="button" className="btn btn-success btn-block">Checkout</button>
+                      <Link to="/checkout" type="button" className="btn btn-success btn-block">Checkout</Link>
                     </div>
                   </div>
                 </div>

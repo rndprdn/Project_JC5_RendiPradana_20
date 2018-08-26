@@ -22,7 +22,7 @@ class App extends Component {
   render() {
 
     const cookies = new Cookies();
-    let mycookie = cookies.get('userID')
+    let mycookie = cookies.get('userID');
     let Navigation = (!mycookie) ? <Header /> : <HeaderUser />
 
     return (

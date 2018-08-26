@@ -9,8 +9,23 @@ class ProductList extends Component {
     datacategory: [],
     idCategory: '',
     termurah: '',
-    termahal: ''
+    termahal: '',
+    currentPage: 1,
+    itemPerPage: 6,
+    upperPageBound: 3,
+    lowPageBound: 0,
+    prevButton: 'disabled',
+    pageBound: 3
   }
+
+  // constructor(){
+  //   super();
+  //   this.handleClick() = this.handleClick.bind(this); 
+  //   this.decrementClick() = this.decrementClick.bind(this); 
+  //   this.incrementClick() = this.incrementClick.bind(this); 
+  //   this.nextButtonClick() = this.nextButtonClick.bind(this); 
+  //   this.prevButtonClick() = this.prevButtonClick.bind(this); 
+  // }
 
   componentWillMount(){
     axios.get('http://localhost:8000/allproduk')

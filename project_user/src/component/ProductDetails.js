@@ -9,7 +9,8 @@ class ProductDetails extends Component {
 
   state = {
     produk: [],
-    status: 1
+    status: 1,
+    redirec: false
   }
 
   componentDidMount(){
@@ -29,6 +30,13 @@ class ProductDetails extends Component {
       axios.post('http://localhost:8000/cart',{
         idproduk: e,
         userID: userid
+      }).then((ambilData) => {
+        var data = ambilData.data;
+        if(data === 1){
+          this.setState({
+            redirec: true
+          })
+        }
       })
     } else if(cookies.get('userID') === undefined){
       this.setState({
@@ -39,6 +47,8 @@ class ProductDetails extends Component {
   }
 
   render() {
+
+    if(this.state.redirec) return <Redirect to="/cart" />
 
   const produk = this.state.produk.map((item, index) => {
     var idproduk = item.id;

@@ -18,7 +18,7 @@ class Footer extends Component {
                   <h5> Samse Jakarta.</h5>
                   <h5>Jl. Songsi 1 Dalam, Jakarta Barat, Jakarta 11210</h5>
                   <ul className="footer-social">
-                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i className="fa fa-facebook" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i className="fa fa-instagram" /></a></li>
                   </ul>
                 </div>
@@ -28,8 +28,8 @@ class Footer extends Component {
                   <h3 className="footer-header">My Account</h3>
                   <ul className="list-links">
                     <li><a href="#">My Account</a></li>
-                    <li><a href="#">My Cart</a></li>
-                    <li><a href="#">Checkout</a></li>
+                    <li><Link to="/cart">My Cart</Link></li>
+                    <li><Link to="/checkout">Checkout</Link></li>
                   </ul>
                 </div>
               </div>

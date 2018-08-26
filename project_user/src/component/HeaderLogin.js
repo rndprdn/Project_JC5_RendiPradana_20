@@ -5,20 +5,13 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-class Header extends Component {
+class HeaderLogin extends Component {
 
   state = {
     data: [],
     namaDepan: '',
     namaBelakang: '',
     status: false
-  }
-
-  pindah = () => {
-    this.setState({
-      state: true
-    })
-    window.location.reload();
   }
 
   componentDidMount(){
@@ -54,7 +47,7 @@ class Header extends Component {
     const jumlahcart = this.state.data.map((item, index) => {
       var jumlah = item.jumlah;
 
-      return <span className="qty">{jumlah}</span>
+      return <span key={index} className="qty">{jumlah}</span>
     })
 
     return (
@@ -104,4 +97,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default HeaderLogin;
