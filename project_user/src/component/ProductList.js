@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class ProductList extends Component {
 
@@ -8,8 +11,8 @@ class ProductList extends Component {
     dataproduk: [],
     datacategory: [],
     idCategory: '',
-    termurah: '',
-    termahal: '',
+    termurah: 'termurah',
+    termahal: 'termahal',
     currentPage: 1,
     itemPerPage: 6,
     upperPageBound: 3,
@@ -45,14 +48,6 @@ class ProductList extends Component {
     })
   }
 
-  // fungsi untuk mengambil id produk untuk di kirim ke backend dan di ambil data produknya untuk ditampilkan ke product detail
-  ambilId = (e) => {
-    // axios.post('http://localhost:8000/hargafilter' ,{
-    //   idHarga: e
-    // })
-    console.log(e)
-  }
-
   filterCategory = (e) => {
     axios.post('http://localhost:8000/produkfilter', {
       categoryId: e
@@ -61,6 +56,33 @@ class ProductList extends Component {
         dataproduk: ambilData.data
       })
     })
+  }
+
+  filterHarga = (e) => {
+    var cek = e;
+    console.log(e);
+  }
+
+  toCart = (e) => {
+    if(cookies.get('userID') !== undefined){
+      var userid = cookies.get('userID');
+      axios.post('http://localhost:8000/cart',{
+        idproduk: e,
+        userID: userid
+      }).then((ambilData) => {
+        var data = ambilData.data;
+        if(data === 1){
+          this.setState({
+            redirec: true
+          })
+        }
+      })
+    } else if(cookies.get('userID') === undefined){
+      this.setState({
+        status: 0
+      })
+    }
+    window.location.reload();
   }
 
   render() {
@@ -88,7 +110,7 @@ class ProductList extends Component {
                   <h3 className="product-price">Rp {hargaproduk}</h3>
                   <h2 className="product-name">{namaproduk}</h2>
                   <div className="product-btns">
-                    <button className="primary-btn add-to-cart"><i className="fa fa-shopping-cart" /> Add to Cart</button>
+                    <button onClick={() => this.toCart(idproduk)} className="btn btn-md btn-danger"><Link to="/cart" className="to-cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart  </Link></button>
                   </div>
                 </div>
               </div>	
@@ -113,19 +135,17 @@ class ProductList extends Component {
           <div className="filter">
             <h3>Filter Harga</h3>
             <hr />
-            <div class="dropdown">
-              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Filter <span class="caret"></span></button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                {/* <li onClick={() => this.termurah(this.defaultValue)} defaultValue="1"><a>Termahal</a></li> */}
-                {/* <li onClick={() => termahal(value)} value="2"><a>Termurah</a></li> */}
-              </ul>
-            </div>
-            <div className="col-search">
+            {/* <select className="form-control">
+              <option selected disabled>-- Filter --</option>
+              <option value={this.state.termurah} onClick={() => this.filterHarga(e)}>Termurah</option>
+              <option value={this.state.termahal}>Termahal</option>
+            </select> */}
+            {/* <div className="col-search">
                 <form>
                     <input className="input search-input" type="text" placeholder="Search Product..." />
                     <button className="search-btn"><i className="fa fa-search" /></button>
                 </form>
-            </div>
+            </div> */}
           </div>
         </div>
             <div className="col-sm-6 col-md-8 col-lg-9">

@@ -76,6 +76,7 @@ class Cart extends Component {
         })
       }
     })
+    window.location.reload();
   }
 
   render() {

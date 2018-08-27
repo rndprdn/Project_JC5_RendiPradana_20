@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import LoginModal from './LoginModal';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class Homepage extends Component {
 
@@ -23,6 +26,28 @@ class Homepage extends Component {
     })
   }
 
+  toCart = (e) => {
+    if(cookies.get('userID') !== undefined){
+      var userid = cookies.get('userID');
+      axios.post('http://localhost:8000/cart',{
+        idproduk: e,
+        userID: userid
+      }).then((ambilData) => {
+        var data = ambilData.data;
+        if(data === 1){
+          this.setState({
+            redirec: true
+          })
+        }
+      })
+    } else if(cookies.get('userID') === undefined){
+      this.setState({
+        status: 0
+      })
+    }
+    window.location.reload();
+  }
+
   render() {
 
     const produk = this.state.bestproduk.map((item, index) => {
@@ -42,7 +67,7 @@ class Homepage extends Component {
                     <h3 className="product-price">Rp. {hargaproduk}</h3>
                     <h2 className="product-name">{namaproduk}</h2>
                     <div className="product-btns">
-                      <button className="primary-btn add-to-cart"><i className="fa fa-shopping-cart" /> Add to Cart</button>
+                      <button onClick={() => this.toCart(idproduk)} className="btn btn-md btn-danger"><Link to="/cart" className="to-cart"><span className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart  </Link></button>
                     </div>
                   </div>
                 </div>
@@ -111,7 +136,7 @@ class Homepage extends Component {
               <div className="row">
                 <div className="col-md-12">
                   <div className="section-title">
-                    <h2 className="title">best Products</h2>
+                    <h2 className="title">New Arrival</h2>
                   </div>
                 </div>
                 {produk}

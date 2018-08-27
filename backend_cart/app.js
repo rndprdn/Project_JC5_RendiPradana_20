@@ -137,7 +137,7 @@ app.post('/loginadmin', (req, res) => {
         if(username === result[i].username && password === result[i].password){
           console.log('login berhasil');
           var userId = result[i].id
-          console.log(userId);  
+          // console.log(userId);  
           res.send((userId).toString());
           break;
         } else if(i === result.length - 1){
@@ -155,8 +155,7 @@ app.get('/formproduk', (req, res) => {
       if(err){
           throw err;
       } else{
-          // console.log(result);
-          res.send(result);
+        res.send(result);
       }
     })
 })
@@ -251,7 +250,6 @@ app.post('/loginuser', (req, res) => {
         if(username === result[i].username && passwordEncrypt === result[i].password){
           console.log('Login berhasil');
           var userId = result[i].id;
-          console.log(userId);
           res.send((userId).toString());
         } else if(i === result.length - 1){
           console.log('Login gagal');
@@ -353,9 +351,6 @@ app.post('/productdetail', (req, res) => {
 app.post('/cart', (req, res) => {
   var idproduk = req.body.idproduk;
   var userid  = req.body.userID;
-  
-  console.log(idproduk);
-  console.log(userid);
 
   var sql = `SELECT * FROM produk WHERE id="${idproduk}"`;
   db.query(sql, (err, result) => {
@@ -468,6 +463,7 @@ app.post('/cartCO', (req, res) => {
 })
 
 app.post('/checkout', (req, res) => {
+  var iduser = req.body.iduser;
   var namalengkap = req.body.namalengkap;
   var alamat = req.body.alamat;
   var kota = req.body.kota;
@@ -478,19 +474,31 @@ app.post('/checkout', (req, res) => {
   var payment = req.body.payment;
   var delivery = req.body.delivery;
   var listcart = req.body.listcart;
-
-  // console.log(namalengkap)
-  // console.log(alamat)
-  // console.log(kota)
-  // console.log(negara)
-  // console.log(kodepos)
-  // console.log(nohp)
-  // console.log(email)
-  // console.log(payment)
-  // console.log(delivery)
-  // console.log(listcart) 
-
   var count = 0;
+
+  var takeorderID = 'SELECT kode_invoice FROM invoice';
+    db.query(takeorderID, (err, result) => {
+      // takeorderID query to see the latest invoice code, to generate new inv code
+      if (err){
+        throw err
+      } else{
+        var length = result.length;
+        // console.log(length)
+        // console.log(results)
+        
+        var lastINV = 0;
+        (length === 0) ? lastINV = 0 : lastINV = parseInt(results[length-1].INV);
+        var INV = lastINV + 1;
+        var INVcode = '';
+        
+        if (INV < 10)  INVcode = INVcode + '0000' + INV
+        else if (INV >= 10 && INV < 100) INVcode = INVcode + '000' + INV
+        else if (INV >= 100 && INV < 1000) INVcode = INVcode + '00' + INV
+        else if (INV >= 1000 && INV < 10000) INVcode = INVcode + '0' + INV
+        else INVcode = INVcode + INV
+        // generate Invoice Code
+        console.log(INVcode)
+      }})
 
   for(var i=0; i<listcart.length; i++){
     var namaproduk = listcart[i].nama_produk;
@@ -498,13 +506,13 @@ app.post('/checkout', (req, res) => {
     var qty = listcart[i].qty;
     var subtotal = listcart[i].harga*listcart[i].qty;
 
-    var sql = `INSERT INTO invoice (nama_lengkap,	alamat,	kota,	negara,	kodepos, no_hp, email, payment, delivery, nama_produk, qty, harga_barang, subtotal) VALUES ("${namalengkap}", "${alamat}", "${kota}", "${negara}", "${kodepos}", "${nohp}", "${email}", "${payment}", "${delivery}", "${namaproduk}", "${qty}", "${hargabarang}", "${subtotal}")`;
+    var sql = `INSERT INTO invoice (nama_lengkap,	alamat,	kota,	negara,	kodepos, no_hp, email, payment, delivery, nama_produk, qty, harga_barang, subtotal) VALUES ("${namalengkap}", "${alamat}", "${kota}", "${negara}", "${kodepos}", "${nohp}", "${email}", "${payment}", "${delivery}", "${namaproduk}", "${qty}", "${hargabarang}", "${subtotal}");`
+    sql += `UPDATE cart SET (status) VALUES ("1") WHERE id_user="${iduser} AND status="0"`;
     db.query(sql, (err, result) => {
       if(err){
         throw err;
       } else{
         count++
-        // console.log(result);
         if(count === listcart.length){
           res.send('1')
         }

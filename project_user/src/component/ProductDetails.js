@@ -103,8 +103,8 @@ class ProductDetails extends Component {
                       </div>
                     </div>
                     <hr />
-                    <a href="#" className="btn btn-md btn-success"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy now </a>&nbsp;
-                    <button onClick={() => this.toCart(idproduk)} className="btn btn-md btn-danger"><Link to="/cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart  </Link></button>
+                    <button onClick={() => this.toCO(idproduk)} className="btn btn-md btn-success"><Link to="/checkout" className="to-cart"><span className="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy now  </Link></button>&nbsp;
+                    <button onClick={() => this.toCart(idproduk)} className="btn btn-md btn-danger"><Link to="/cart" className="to-cart"><span className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart  </Link></button>
                   </article>
                 </aside>
               </div>

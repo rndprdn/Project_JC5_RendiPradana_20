@@ -17,6 +17,7 @@ import Invoice from '../src/component/Invoice';
 import Cart from '../src/component/Cart';
 import Login from './component/Login';
 import Logout from './component/Logout';
+import Contact from './component/Contact';
 
 class App extends Component {
   render() {
@@ -39,6 +40,7 @@ class App extends Component {
           <Route path="/cart" component={Cart} />
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
+          <Route path="/contact" component={Contact} />
         <Subscribe />
         <Footer />
       </div>

@@ -872,6 +872,12 @@ a:focus{
     margin-bottom: 40px;
 }
 
+.to-cart {
+  color: #fff !important;
+}
 
+.to-cart:hover {
+  text-decoration: none;
+}
 
   

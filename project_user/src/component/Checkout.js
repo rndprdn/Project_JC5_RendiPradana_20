@@ -42,7 +42,9 @@ class Checkout extends Component {
   }
 
   checkOut = (e) => {
+    var iduser = cookies.get('userID');
     axios.post('http://localhost:8000/checkout', {
+      iduser: iduser,
       namalengkap: e.fullname.value,
       alamat: e.address.value,
       kota: e.city.value,
@@ -77,7 +79,7 @@ class Checkout extends Component {
       var qty = item.qty;
       var fotoproduk = item.foto_produk;
 
-      return <div>
+      return <div key={index}>
               <div className="form-group">
                 <div className="col-sm-3 col-xs-3">
                   <img className="img-responsive" src={'http://localhost:8000/tampunganGambar/' + fotoproduk} />
@@ -216,9 +218,8 @@ class Checkout extends Component {
                             </div>
                         </div>
                       </div>
-                      {/*CREDIT CART PAYMENT END*/}
                   </div>
-                  </form>
+                </form>
               </div>
               </div>
           </div>
