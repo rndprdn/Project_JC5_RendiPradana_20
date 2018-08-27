@@ -12,7 +12,8 @@ class Cart extends Component {
     subPrice: [],
     detailCart: [],
     grandTotal: 0,
-    iduser: cookies.get('userID')
+    iduser: cookies.get('userID'),
+    chooseitem: ['Your Cart is Empty']
   }
 
   componentWillMount(){

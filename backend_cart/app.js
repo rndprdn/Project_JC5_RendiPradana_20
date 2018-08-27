@@ -381,8 +381,8 @@ app.post('/cart', (req, res) => {
 app.post('/datacart', (req, res) => {
   var iduser = req.body.id;
 
-  var sql = `SELECT cart.id, id_user, product_id, nama_produk, foto_produk, desk, harga, size_chart.size, qty FROM cart JOIN size_chart ON cart.size = size_chart.id WHERE id_user="${iduser}";`
-  sql += `SELECT id, harga*qty AS "subTotalPrice" FROM cart WHERE id_user="${iduser}"`
+  var sql = `SELECT cart.id, id_user, product_id, nama_produk, foto_produk, desk, harga, size_chart.size, qty FROM cart JOIN size_chart ON cart.size = size_chart.id WHERE id_user="${iduser}" AND status="0";`
+  sql += `SELECT id, harga*qty AS "subTotalPrice" FROM cart WHERE id_user="${iduser}" AND status="0"`
   db.query(sql, (err, result) => {
     if(err){
       throw err;
@@ -396,7 +396,7 @@ app.post('/datacart', (req, res) => {
 app.post('/jumlahcart', (req, res) => {
   var userid = req.body.userID;
 
-  var sql = `SELECT count(*) AS jumlah FROM cart WHERE id_user="${userid}"`;
+  var sql = `SELECT count(*) AS jumlah FROM cart WHERE id_user="${userid}" AND status="0"`;
   db.query(sql, (err, result) => {
     if(err){
       throw err
@@ -418,7 +418,7 @@ app.post('/updatecart', (req, res) => {
       throw err;
     } else{
       var reTake = `SELECT * FROM cart WHERE id_user="${userID}";` // retake the cart list
-      reTake += `SELECT id, harga*qty AS "subTotalPrice" FROM cart WHERE id_user="${userID}"`
+      reTake += `SELECT id, harga*qty AS "subTotalPrice" FROM cart WHERE id_user="${userID}" AND status="0"`
       db.query(reTake, (err, result) => {
         if(err){
           throw err;
@@ -449,8 +449,8 @@ app.post('/deletecart', (req, res) => {
 app.post('/cartCO', (req, res) => {
   var iduser = req.body.iduser;
 
-  var sql = `SELECT id, nama_produk, foto_produk, qty, harga FROM cart WHERE id_user="${iduser}";`
-  sql += `SELECT harga*qty AS "subTotalPrice" FROM cart WHERE id_user="${iduser}";`
+  var sql = `SELECT id, nama_produk, foto_produk, qty, harga FROM cart WHERE id_user="${iduser}" AND status="0";`
+  sql += `SELECT harga*qty AS "subTotalPrice" FROM cart WHERE id_user="${iduser}" AND status="0";`
   sql += 'SELECT * FROM payment_method;'
   sql += 'SELECT * FROM delivery_method';
   db.query(sql, (err, result) => {
@@ -477,48 +477,48 @@ app.post('/checkout', (req, res) => {
   var count = 0;
 
   var takeorderID = 'SELECT kode_invoice FROM invoice';
-    db.query(takeorderID, (err, result) => {
-      // takeorderID query to see the latest invoice code, to generate new inv code
-      if (err){
-        throw err
-      } else{
-        var length = result.length;
-        // console.log(length)
-        // console.log(results)
-        
-        var lastINV = 0;
-        (length === 0) ? lastINV = 0 : lastINV = parseInt(results[length-1].INV);
-        var INV = lastINV + 1;
-        var INVcode = '';
-        
-        if (INV < 10)  INVcode = INVcode + '0000' + INV
-        else if (INV >= 10 && INV < 100) INVcode = INVcode + '000' + INV
-        else if (INV >= 100 && INV < 1000) INVcode = INVcode + '00' + INV
-        else if (INV >= 1000 && INV < 10000) INVcode = INVcode + '0' + INV
-        else INVcode = INVcode + INV
-        // generate Invoice Code
-        console.log(INVcode)
-      }})
+  db.query(takeorderID, (err, result) => {
+    // takeorderID query to see the latest invoice code, to generate new inv code
+    if (err){
+      throw err
+    } else{
+      var length = result.length;
+      console.log(length)
+      console.log(result)
+      
+      var lastINV = 0;
+      (length === 0) ? lastINV = 0 : lastINV = parseInt(result[length-1].INV);
+      var INV = lastINV + 1;
+      var INVcode = '';
+      
+      if (INV < 10)  INVcode = INVcode + '0000' + INV
+      else if (INV >= 10 && INV < 100) INVcode = INVcode + '000' + INV
+      else if (INV >= 100 && INV < 1000) INVcode = INVcode + '00' + INV
+      else if (INV >= 1000 && INV < 10000) INVcode = INVcode + '0' + INV
+      else INVcode = INVcode + INV
+      // generate Invoice Code
+      console.log(INVcode)
 
-  for(var i=0; i<listcart.length; i++){
-    var namaproduk = listcart[i].nama_produk;
-    var hargabarang = listcart[i].harga;
-    var qty = listcart[i].qty;
-    var subtotal = listcart[i].harga*listcart[i].qty;
-
-    var sql = `INSERT INTO invoice (nama_lengkap,	alamat,	kota,	negara,	kodepos, no_hp, email, payment, delivery, nama_produk, qty, harga_barang, subtotal) VALUES ("${namalengkap}", "${alamat}", "${kota}", "${negara}", "${kodepos}", "${nohp}", "${email}", "${payment}", "${delivery}", "${namaproduk}", "${qty}", "${hargabarang}", "${subtotal}");`
-    sql += `UPDATE cart SET (status) VALUES ("1") WHERE id_user="${iduser} AND status="0"`;
-    db.query(sql, (err, result) => {
-      if(err){
-        throw err;
-      } else{
-        count++
-        if(count === listcart.length){
-          res.send('1')
-        }
+      for(var i=0; i<listcart.length; i++){
+        var namaproduk = listcart[i].nama_produk;
+        var hargabarang = listcart[i].harga;
+        var qty = listcart[i].qty;
+        var subtotal = listcart[i].harga*listcart[i].qty;
+    
+        var sql = `INSERT INTO invoice (kode_invoice, nama_lengkap,	alamat,	kota,	negara,	kodepos, no_hp, email, payment, delivery, nama_produk, qty, harga_barang, subtotal) VALUES ("${INVcode}", "${namalengkap}", "${alamat}", "${kota}", "${negara}", "${kodepos}", "${nohp}", "${email}", "${payment}", "${delivery}", "${namaproduk}", "${qty}", "${hargabarang}", "${subtotal}");`
+        sql += `UPDATE cart SET status="1" WHERE id_user="${iduser}" AND status="0"`
+        db.query(sql, (err, result) => {
+          if(err){
+            throw err;
+          } else{
+            count++
+            if(count === listcart.length){
+              res.send('1')
+            }
+          }
+        })
       }
-    })
-  }
+    }})
 })
 
 app.listen(port, (req, res) => {
