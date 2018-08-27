@@ -1,9 +1,39 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 import Logo from './img/bewok.png';
 
 export default class componentName extends Component {
+
+  state = {
+    data: []
+  }
+
+  componentWillMount(){
+    axios.get('http://localhost:8000/profileadmin')
+    .then((ambilData) => {
+      this.setState({
+        data: ambilData.data
+      })
+      console.log(this.state.data);
+    })
+  }
+
   render() {
+
+    const dataadmin = this.state.data.map((item, index) => {
+      var nama = item.nama_lengkap;
+
+      return <span className="hidden-xs">{nama}</span>
+    })
+
+    const dropdown = this.state.data.map((item, index) => {
+      var nama = item.nama_lengkap;
+      var role = item.role;
+
+      return <p>{nama} - {role}</p>
+    })
+
     return (
       <div>
         <header className="main-header">
@@ -20,19 +50,14 @@ export default class componentName extends Component {
                 <li className="dropdown user user-menu">
                   <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                     <img src={Logo} className="user-image" alt="User Image" />
-                    <span className="hidden-xs">Rendi Pradana</span>
+                    {dataadmin}
                   </a>
                   <ul className="dropdown-menu">
                     <li className="user-header">
                       <img src={Logo} className="img-circle" alt="User Image" />
-                      <p>
-                        Rendi Pradana - ADMIN
-                      </p>
+                      {dropdown}
                     </li>
                     <li className="user-footer">
-                      <div className="pull-left">
-                        <a href="#" className="btn btn-default btn-flat">Profile</a>
-                      </div>
                       <div className="pull-right">
                         <Link to="/logout" className="btn btn-default btn-flat">Sign out</Link>
                       </div>

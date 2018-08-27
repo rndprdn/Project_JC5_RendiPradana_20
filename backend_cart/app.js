@@ -487,7 +487,7 @@ app.post('/checkout', (req, res) => {
       console.log(result)
       
       var lastINV = 0;
-      (length === 0) ? lastINV = 0 : lastINV = parseInt(result[length-1].INV);
+      (length === 0) ? lastINV = 0 : lastINV = parseInt(result[length-1].kode_invoice);
       var INV = lastINV + 1;
       var INVcode = '';
       
@@ -505,7 +505,7 @@ app.post('/checkout', (req, res) => {
         var qty = listcart[i].qty;
         var subtotal = listcart[i].harga*listcart[i].qty;
     
-        var sql = `INSERT INTO invoice (kode_invoice, nama_lengkap,	alamat,	kota,	negara,	kodepos, no_hp, email, payment, delivery, nama_produk, qty, harga_barang, subtotal) VALUES ("${INVcode}", "${namalengkap}", "${alamat}", "${kota}", "${negara}", "${kodepos}", "${nohp}", "${email}", "${payment}", "${delivery}", "${namaproduk}", "${qty}", "${hargabarang}", "${subtotal}");`
+        var sql = `INSERT INTO invoice (kode_invoice, user_id, nama_lengkap,	alamat,	kota,	negara,	kodepos, no_hp, email, payment, delivery, nama_produk, qty, harga_barang, subtotal) VALUES ("${INVcode}", "${iduser}" "${namalengkap}", "${alamat}", "${kota}", "${negara}", "${kodepos}", "${nohp}", "${email}", "${payment}", "${delivery}", "${namaproduk}", "${qty}", "${hargabarang}", "${subtotal}");`
         sql += `UPDATE cart SET status="1" WHERE id_user="${iduser}" AND status="0"`
         db.query(sql, (err, result) => {
           if(err){
@@ -519,6 +519,52 @@ app.post('/checkout', (req, res) => {
         })
       }
     }})
+})
+
+app.get('/jumlahdata', (req, res) => {
+  var sql = 'SELECT COUNT(*) AS jumlah FROM invoice';
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
+})
+
+app.get('/jumlahuser', (req, res) => {
+  var sql = 'SELECT COUNT(*) AS jumlah FROM newusers';
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
+})
+
+app.get('/profileadmin', (req, res) => {
+  var sql = 'SELECT * FROM admin';
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
+})
+
+app.post('/datainvoice', (req, res) => {
+  var iduser = req.body.iduser;
+
+  var sql = `SELECT * FROM invoice WHERE user_id="${iduser}"`;
+  db.query(sql, (err, result) => {
+    if(err){
+      throw err;
+    } else{
+      res.send(result);
+    }
+  })
 })
 
 app.listen(port, (req, res) => {
