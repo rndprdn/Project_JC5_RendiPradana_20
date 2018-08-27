@@ -119,6 +119,21 @@ class Cart extends Component {
 
     })
 
+    const noitem = this.state.chooseitem.map((item, index) => {
+
+      return <div key={index}>
+      <div className="row">
+        <div className="col-md-12" style={{textAlign: "center"}}>{item}</div>
+      </div>
+      <div className="col-md-6 col-md-offset-3">
+        <Link to="/productlist" type="button" className="btn btn-success btn-block">Lanjut berbelanja</Link>
+      </div>
+    </div>
+
+    })
+
+    const cartLength = produkCart.length
+
     return (
       <div className="container">
         <div className="shopping-cart">
@@ -135,7 +150,7 @@ class Cart extends Component {
                   </div>
                 </div>
                 <div className="panel-body">
-                  {produkCart}
+                  {(cartLength === 0) ? noitem : produkCart}
                   <hr />
                   <div className="row">
                     <div className="text-center">

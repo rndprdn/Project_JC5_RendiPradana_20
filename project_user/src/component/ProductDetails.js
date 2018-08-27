@@ -52,7 +52,6 @@ class ProductDetails extends Component {
 
   const produk = this.state.produk.map((item, index) => {
     var idproduk = item.id;
-    var categoryid = item.category_id;
     var namaproduk = item.nama_produk;
     var hargaproduk = item.harga;
     var qty = item.qty;
