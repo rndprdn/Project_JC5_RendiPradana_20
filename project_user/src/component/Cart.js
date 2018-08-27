@@ -13,7 +13,9 @@ class Cart extends Component {
     detailCart: [],
     grandTotal: 0,
     iduser: cookies.get('userID'),
-    chooseitem: ['Your Cart is Empty']
+    chooseitem: ['Your Cart is Empty'],
+    button: [],
+    buttonIsiCart: []
   }
 
   componentWillMount(){
@@ -134,6 +136,10 @@ class Cart extends Component {
 
     const cartLength = produkCart.length
 
+    const button = this.state.button.map((item, index) => {
+      <div></div>
+    })
+
     return (
       <div className="container">
         <div className="shopping-cart">
@@ -151,28 +157,34 @@ class Cart extends Component {
                 </div>
                 <div className="panel-body">
                   {(cartLength === 0) ? noitem : produkCart}
-                  <hr />
-                  <div className="row">
-                    <div className="text-center">
-                      <div className="col-xs-8">
-                        <h6 className="text-right">Added items?</h6>
-                      </div>
-                      <div className="col-xs-4">
-                        <Link to="/productlist" type="button" className="btn btn-info btn-sm btn-block">Update cart</Link>
-                      </div>
-                    </div>
-                  </div>
+                  {(cartLength === 0) ? button :  <div>
+                                                    <hr />
+                                                    <div className="row">
+                                                      <div className="text-center">
+                                                        <div className="col-xs-8">
+                                                          <h6 className="text-right">Added items?</h6>
+                                                        </div>
+                                                        <div className="col-xs-4">
+                                                          <Link to="/productlist" type="button" className="btn btn-info btn-sm btn-block">Update cart</Link>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                
+                  }
                 </div>
-                <div className="panel-footer">
-                  <div className="row text-center">
-                    <div className="col-xs-8">
-                      <h4 className="text-right">Total <strong>Rp. {this.state.grandTotal}</strong></h4>
-                    </div>
-                    <div className="col-xs-4">
-                      <Link to="/checkout" type="button" className="btn btn-success btn-block">Checkout</Link>
-                    </div>
-                  </div>
-                </div>
+                {(cartLength === 0) ? button :  <div className="panel-footer">
+                                                  <div className="row text-center"> 
+                                                    <div className="col-xs-8">
+                                                      <h4 className="text-right">Total <strong>Rp. {this.state.grandTotal}</strong></h4>
+                                                    </div>
+                                                    <div className="col-xs-4">
+                                                      <Link to="/checkout" type="button" className="btn btn-success btn-block">Checkout</Link>
+                                                    </div>
+                                                  </div>
+                                                </div>
+            
+                }
               </div>
             </div>
           </div>
