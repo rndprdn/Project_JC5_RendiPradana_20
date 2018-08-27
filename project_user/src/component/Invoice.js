@@ -8,7 +8,8 @@ const cookies = new Cookies();
 class Homepage extends Component {
 
   state = {
-    data: []
+    data: [],
+    ship: 10000
   }
 
   componentDidMount(){
@@ -85,9 +86,10 @@ class Homepage extends Component {
 
     const barang = this.state.data.map((item, index) => {
       var namaproduk = item.nama_produk;
-      var hargaproduk = item.harga;
+      var hargaproduk = item.harga_barang;
       var qty = item.qty;
       var subtotal = item.subtotal;
+      var total = Number(subtotal) + Number(this.state.ship);
       
       return <div className="row">
       <div className="col-md-12">
@@ -107,36 +109,29 @@ class Homepage extends Component {
                   </tr>
                   </thead>
                   <tbody>
-                  {/* foreach ($order->lineItems as $line) or some such thing here */}
                   <tr>
-                      <td>BS-200</td>
-                      <td className="text-center">$25.00</td>
-                      <td className="text-center">1</td>
-                      <td className="text-right">$25.00</td>
-                  </tr>
-                  <tr>
-                      <td>BS-400</td>
-                      <td className="text-center">$25.00</td>
-                      <td className="text-center">1</td>
-                      <td className="text-right">$25.00</td>
+                      <td>{namaproduk}</td>
+                      <td className="text-center">Rp. {hargaproduk}</td>
+                      <td className="text-center">{qty}</td>
+                      <td className="text-right">Rp. {subtotal}</td>
                   </tr>
                   <tr>
                       <td className="thick-line" />
                       <td className="thick-line" />
                       <td className="thick-line text-center"><strong>Subtotal</strong></td>
-                      <td className="thick-line text-right">$50.00</td>
+                      <td className="thick-line text-right">Rp. {subtotal}</td>
                   </tr>
                   <tr>
                       <td className="no-line" />
                       <td className="no-line" />
                       <td className="no-line text-center"><strong>Shipping</strong></td>
-                      <td className="no-line text-right">$15</td>
+                      <td className="no-line text-right">Rp. {this.state.ship}</td>
                   </tr>
                   <tr>
                       <td className="no-line" />
                       <td className="no-line" />
                       <td className="no-line text-center"><strong>Total</strong></td>
-                      <td className="no-line text-right">$75.00</td>
+                      <td className="no-line text-right">Rp. {total}</td>
                   </tr>
                   </tbody>
               </table>
