@@ -39,19 +39,8 @@ class Register extends Component {
                     <div className="form-group">
                       <input ref="email" type="email" className="form-control" placeholder="Email address" />
                     </div>
-                    <div className="radio">
-                      <label className="radio-inline">
-                          <input ref="" type="radio" name="optradio" defaultChecked />Men
-                      </label>
-                      <label className="radio-inline">
-                          <input ref="" type="radio" name="optradio" />Women
-                      </label>
-                    </div>
                     <div className="form-group">
                       <input type="password" className="form-control" placeholder="Password" />
-                    </div>
-                    <div className="form-group">
-                      <input ref="password" type="password" className="form-control" placeholder="Retype Password" />
                     </div>
                     <button className="btn btn-primary pull-right" type="button" onClick={() => this.daftarUser(this.refs)}>Create An Account</button>
                   </form>
