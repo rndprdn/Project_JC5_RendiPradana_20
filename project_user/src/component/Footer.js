@@ -27,7 +27,7 @@ class Footer extends Component {
                 <div className="footer">
                   <h3 className="footer-header">My Account</h3>
                   <ul className="list-links">
-                    <li><a href="#">My Account</a></li>
+                    <li><Link to="/profile">My Account</Link></li>
                     <li><Link to="/cart">My Cart</Link></li>
                     <li><Link to="/checkout">Checkout</Link></li>
                   </ul>

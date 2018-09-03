@@ -79,7 +79,6 @@ class Homepage extends Component {
       <div>
         <div className="content">
           <div className="container">
-          <LoginModal />
             <div id="myCarousel" className="carousel slide" data-ride="carousel">
               <ol className="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to={0} className="active" />

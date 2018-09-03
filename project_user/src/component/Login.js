@@ -8,7 +8,8 @@ const cookies = new Cookies();
 class Login extends Component {
 
   state = {
-    status: false
+    status: false,
+    typePass: 'password'
   }
 
   login = (e) => {
@@ -24,6 +25,19 @@ class Login extends Component {
     })
   }
 
+  showPass = () => {
+    if(document.getElementById("showpass").checked === true){
+      this.setState({
+        typePass: 'text'
+      })
+    } else if(document.getElementById("showpass").checked === false){
+      this.setState({
+        typePass: 'password'
+      })
+    }
+
+  }
+
   render() {
 
     if(this.state.status === true){
@@ -31,7 +45,7 @@ class Login extends Component {
     }
 
     return (
-        <div className="container" style={{marginTop: 50, marginBottom: 100}}>
+        <div className="container" style={{marginTop: 50, marginBottom: 80}}>
             <div className="row">
                 <div className="col-md-4 col-md-offset-4">
                     <div className="panel panel-default">
@@ -45,11 +59,11 @@ class Login extends Component {
                               <input ref="username" className="form-control" placeholder="Username" type="text" autoFocus />
                             </div>
                             <div className="form-group">
-                              <input ref="password" className="form-control" placeholder="Password" type="password" />
+                              <input ref="password" className="form-control" placeholder="Password" type={this.state.typePass} />
                             </div>
                             <div className="checkbox">
                               <label>
-                                <input name="remember" type="checkbox" defaultValue="Remember Me" /> Remember Me
+                                <input id="showpass" type="checkbox" onChange={this.showPass} /> Show Password 
                               </label>
                             </div>
                             <button className="btn btn-lg btn-success btn-block" type="button" onClick={() => this.login(this.refs)}>Login</button>

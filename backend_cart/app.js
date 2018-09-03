@@ -218,18 +218,22 @@ app.post('/createaccount', (req, res) => {
   var namaDepan = req.body.namadepan;
   var namaBelakang = req.body.namabelakang;
   var username = req.body.username;
-  var email = req.body.email;
   var password = req.body.password;
+  var sex = req.body.sex;
+  var email = req.body.email;
+  var nohp = req.body.nohp;
+  var date = req.body.date;
+  var alamat = req.body.address;
 
   var passwordUser = password;
   var passwordEncrypt = crypto.createHash('sha256', secret).update(passwordUser).digest('hex');
 
-  var sql = `INSERT INTO newusers (nama_depan, nama_belakang, username,	email, password) VALUES ("${namaDepan}", "${namaBelakang}", "${username}", "${email}", "${passwordEncrypt}")`;
+  var sql = `INSERT INTO newusers (nama_depan, nama_belakang, username, password, sex, email, nohp, date, alamat) VALUES ("${namaDepan}", "${namaBelakang}", "${username}", "${passwordEncrypt}", "${sex}", "${email}", "${nohp}", "${date}", "${alamat}")`;
   db.query(sql, (err, result) => {
     if(err){
-      throw err;
+      res.send('0');
     } else{
-      console.log(result);
+      res.send('1');
     }
   })
 })
@@ -260,7 +264,7 @@ app.post('/loginuser', (req, res) => {
 })
 
 app.post('/profileuser', (req, res) => {
-  var userId = req.body.idUser;
+  var userId = req.body.userid;
 
   var sql = `SELECT * FROM newusers WHERE id = "${userId}"`;
   db.query(sql, (err, result) => {
@@ -476,49 +480,54 @@ app.post('/checkout', (req, res) => {
   var listcart = req.body.listcart;
   var count = 0;
 
-  var takeorderID = 'SELECT kode_invoice FROM invoice';
-  db.query(takeorderID, (err, result) => {
-    // takeorderID query to see the latest invoice code, to generate new inv code
-    if (err){
-      throw err
-    } else{
-      var length = result.length;
-      console.log(length)
-      console.log(result)
-      
-      var lastINV = 0;
-      (length === 0) ? lastINV = 0 : lastINV = parseInt(result[length-1].kode_invoice);
-      var INV = lastINV + 1;
-      var INVcode = '';
-      
-      if (INV < 10)  INVcode = INVcode + '0000' + INV
-      else if (INV >= 10 && INV < 100) INVcode = INVcode + '000' + INV
-      else if (INV >= 100 && INV < 1000) INVcode = INVcode + '00' + INV
-      else if (INV >= 1000 && INV < 10000) INVcode = INVcode + '0' + INV
-      else INVcode = INVcode + INV
-      // generate Invoice Code
-      console.log(INVcode)
+  if(namalengkap !== undefined && alamat !== undefined && kota !== undefined && negara !== undefined && nohp !== undefined && email !== undefined && payment !== undefined && delivery !== undefined && listcart !== undefined ){
+    var takeorderID = 'SELECT kode_invoice FROM invoice';
+    db.query(takeorderID, (err, result) => {
+      // takeorderID query to see the latest invoice code, to generate new inv code
+      if (err){
+        throw err
+      } else{
+        var length = result.length;
+        // console.log(length)
+        // console.log(result)
+        
+        var lastINV = 0;
+        (length === 0) ? lastINV = 0 : lastINV = parseInt(result[length-1].kode_invoice);
+        var INV = lastINV + 1;
+        var INVcode = '';
+        
+        if (INV < 10)  INVcode = INVcode + '0000' + INV
+        else if (INV >= 10 && INV < 100) INVcode = INVcode + '000' + INV
+        else if (INV >= 100 && INV < 1000) INVcode = INVcode + '00' + INV
+        else if (INV >= 1000 && INV < 10000) INVcode = INVcode + '0' + INV
+        else INVcode = INVcode + INV
+        // generate Invoice Code
+        // console.log(INVcode)
 
-      for(var i=0; i<listcart.length; i++){
-        var namaproduk = listcart[i].nama_produk;
-        var hargabarang = listcart[i].harga;
-        var qty = listcart[i].qty;
-        var subtotal = listcart[i].harga*listcart[i].qty;
-    
-        var sql = `INSERT INTO invoice (kode_invoice, user_id, nama_lengkap,	alamat,	kota,	negara,	kodepos, no_hp, email, payment, delivery, nama_produk, qty, harga_barang, subtotal) VALUES ("${INVcode}", "${iduser}" "${namalengkap}", "${alamat}", "${kota}", "${negara}", "${kodepos}", "${nohp}", "${email}", "${payment}", "${delivery}", "${namaproduk}", "${qty}", "${hargabarang}", "${subtotal}");`
-        sql += `UPDATE cart SET status="1" WHERE id_user="${iduser}" AND status="0"`
-        db.query(sql, (err, result) => {
-          if(err){
-            throw err;
-          } else{
-            count++
-            if(count === listcart.length){
-              res.send('1')
+        for(var i=0; i<listcart.length; i++){
+          var namaproduk = listcart[i].nama_produk;
+          var hargabarang = listcart[i].harga;
+          var qty = listcart[i].qty;
+          var subtotal = listcart[i].harga*listcart[i].qty;
+      
+          var sql = `INSERT INTO invoice (kode_invoice, user_id, nama_lengkap,	alamat,	kota,	negara,	kodepos, no_hp, email, payment, delivery, nama_produk, qty, harga_barang, subtotal)
+          VALUES ("${INVcode}", "${iduser}", "${namalengkap}", "${alamat}", "${kota}", "${negara}", "${kodepos}", "${nohp}", "${email}", "${payment}", "${delivery}", "${namaproduk}", "${qty}", "${hargabarang}", "${subtotal}");`
+          sql += `UPDATE cart SET status="1" WHERE id_user="${iduser}" AND status="0"`
+          db.query(sql, (err, result) => {
+            if(err){
+              throw err;
+            } else{
+              count++
+              if(count === listcart.length){
+                res.send('1')
+              }
             }
-          }
-        })
-      }
-    }})
+          })
+        }
+      }})
+  } else{
+    res.send('5');
+  }
 })
 
 app.get('/jumlahdata', (req, res) => {

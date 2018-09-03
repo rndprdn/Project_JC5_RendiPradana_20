@@ -39,49 +39,49 @@ class Homepage extends Component {
       var deliv = item.delivery;
       var orderdate = item.waktu_co;
 
-      return <div className="invoice">
-      <div className="row">
-      <div className="col-xs-12">
-          <div className="invoice-title">
-          <h2>Invoice</h2><h3 className="pull-right">Order # {noInvoice}</h3>
-          </div>
-          <hr />
-          <div className="row">
-          <div className="col-xs-6">
-              <address>
-              <strong>Billed To:</strong><br />
-              {nama}<br />
-              {alamat}<br />
-              </address>
-          </div>
-          <div className="col-xs-6 text-right">
-              <address>
-              <strong>Shipped To:</strong><br />
-              {nama}<br />
-              {alamat}<br />
-              </address>
-          </div>
-          </div>
-          <div className="row">
-          <div className="col-xs-6">
-              <address>
-              <strong>Payment Method:</strong><br />
-              {payment}<br /><br />
-              {email}<br />
-              <strong>Delivery Method:</strong><br />
-              {deliv}<br />
-              </address>
-          </div>
-          <div className="col-xs-6 text-right">
-              <address>
-              <strong>Order Date:</strong><br />
-             {orderdate}<br /><br />
-              </address>
-          </div>
-          </div>
-      </div>
-      </div>
-  </div>
+      return  <div className="invoice">
+                <div className="row">
+                  <div className="col-xs-12">
+                    <div className="invoice-title">
+                      <h2>Invoice</h2><h3 className="pull-right">Order # {noInvoice}</h3>
+                    </div>
+                    <hr />
+                    <div className="row">
+                      <div className="col-xs-6">
+                          <address>
+                          <strong>Billed To:</strong><br />
+                          {nama}<br />
+                          {alamat}<br />
+                          </address>
+                      </div>
+                      <div className="col-xs-6 text-right">
+                          <address>
+                          <strong>Shipped To:</strong><br />
+                          {nama}<br />
+                          {alamat}<br />
+                          </address>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-xs-6">
+                          <address>
+                          <strong>Payment Method:</strong><br />
+                          {payment}<br />
+                          {email}<br /><br />
+                          <strong>Delivery Method:</strong><br />
+                          {deliv}<br />
+                          </address>
+                      </div>
+                      <div className="col-xs-6 text-right">
+                        <address>
+                        <strong>Order Date:</strong><br />
+                        {orderdate}<br /><br />
+                        </address>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
     })
 
     const barang = this.state.data.map((item, index) => {
@@ -138,6 +138,8 @@ class Homepage extends Component {
               </div>
           </div>
           </div>
+          <button className="pull-left">Cancel Order</button>
+          <button className="pull-right">Confirm Payment</button>
       </div>
       </div>
     })

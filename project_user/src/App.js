@@ -31,7 +31,6 @@ class App extends Component {
         {Navigation}
         <Navbar />
           <Route exact path="/" component={Homepage} />
-          <Route path="/profile" component={Profile} />
           <Route path="/register" component={Register} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/productDetails" component={ProductDetails} />
@@ -41,6 +40,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
           <Route path="/contact" component={Contact} />
+          <Route path="/profile" component={Profile} />
         <Subscribe />
         <Footer />
       </div>

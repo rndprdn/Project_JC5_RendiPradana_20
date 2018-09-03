@@ -1,147 +1,110 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 
-class Profile extends Component {
+const cookies = new Cookies();
+
+export default class LoginTest extends Component {
+
+  state = {
+    akun: []
+  }
+
+  componentDidMount(){
+    var iduser = cookies.get('userID');
+    axios.post('http://localhost:8000/profileuser', {
+      userid: iduser
+    }).then((ambilData) => {
+      this.setState({
+        akun: ambilData.data
+      })
+    })
+    axios.get()
+  }
+
   render() {
+
+    const akun = this.state.akun.map((item, index) => {
+      var firstname = item.nama_depan;
+      var lastname = item.nama_belakang;
+      var username = item.username;
+      var nohp = item.nohp;
+      var email = item.email;
+      var alamat = item.alamat;
+
+      return  <div key={index} className="tab-pane active" id="home">
+                <hr />
+                <form className="form">
+                  <div className="form-group">
+                    <div className="col-xs-6">
+                      <label><h4>First name</h4></label>
+                      <input type="text" className="form-control" placeholder="first name" defaultValue={firstname} title="enter your first name if any." />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="col-xs-6">
+                      <label><h4>Last name</h4></label>
+                      <input type="text" className="form-control" placeholder="last name" defaultValue={lastname} title="enter your last name if any." />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="col-xs-6">
+                      <label><h4>Username</h4></label>
+                      <input type="text" className="form-control" defaultValue={username} disabled/>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="col-xs-6">
+                      <label><h4>Phone</h4></label>
+                      <input type="text" className="form-control" placeholder="enter phone" defaultValue={nohp} title="enter your phone number if any." />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="col-xs-6">
+                      <label><h4>Email</h4></label>
+                      <input type="email" className="form-control" placeholder="you@email.com"  defaultValue={email} title="enter your email." />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="col-xs-6">
+                      <label><h4>Location</h4></label>
+                      <textarea type="email" className="form-control" placeholder="Location" defaultValue={alamat} title="enter a location" />
+                    </div>
+                  </div>
+                </form>
+                <hr />
+              </div>
+    })
+
     return (
-      <div>
-        <div className="profile-page" style={{marginBottom: 100}}>
-            <div className="container">
-                <h1 className="page-header">Edit Profile</h1>
-                <div className="row">
-                {/* left column */}
-                <div className="col-md-4 col-sm-6 col-xs-12">
-                    <div className="text-center">
-                    <img src="img/pp.jpg" className="avatar img-circle img-thumbnail" alt="avatar" />
-                    <h6>Upload a different photo...</h6>
-                    <input type="file" className="text-center center-block well well-sm" />
-                    </div>
-                </div>
-                {/* edit form column */}
-                <div className="col-md-8 col-sm-6 col-xs-12 personal-info">
-                    <div className="alert alert-info alert-dismissable">
-                    <a className="panel-close close" data-dismiss="alert">×</a> 
-                    <i className="fa fa-bullhorn" />
-                    Please complete <strong>your profile</strong>
-                    </div>
-                    <h3>Personal info</h3>
-                    <form className="form-horizontal" role="form">
-                    <div className="form-group">
-                        <label className="col-lg-3 control-label">First name:</label>
-                        <div className="col-lg-8">
-                        <input className="form-control" placeholder type="text" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label className="col-lg-3 control-label">Last name:</label>
-                        <div className="col-lg-8">
-                        <input className="form-control" type="text" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label className="col-lg-3 control-label">Email:</label>
-                        <div className="col-lg-8">
-                        <input className="form-control" type="email" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label className="col-lg-3 control-label">Time Zone:</label>
-                        <div className="col-lg-8">
-                        <div className="ui-select">
-                            <select id="user_time_zone" className="form-control">
-                            <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                            <option value="Alaska">(GMT-09:00) Alaska</option>
-                            <option value="Pacific Time (US & Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                            <option value="Arizona">(GMT-07:00) Arizona</option>
-                            <option value="Mountain Time (US & Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                            <option value="Central Time (US & Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                            <option value="Eastern Time (US & Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                            <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                            </select>
-                        </div>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label className="col-md-3 control-label">Username:</label>
-                        <div className="col-md-8">
-                        <input className="form-control" type="text" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label className="col-md-3 control-label">Password:</label>
-                        <div className="col-md-8">
-                        <input className="form-control" type="password" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label className="col-md-3 control-label">Confirm password:</label>
-                        <div className="col-md-8">
-                        <input className="form-control" type="password" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label className="col-md-3 control-label" />
-                        <div className="col-md-8">
-                        <input style={{marginRight: 10}} className="btn btn-primary" Value="Save Changes" type="button" />
-                        <span />
-                        <input className="btn btn-default" Value="Cancel" type="reset" />
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                </div>
+      <div className="container bootstrap snippet">
+        <div className="row">
+          <div className="col-sm-3">
+            <div className="text-center">
+              <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" className="avatar img-circle img-thumbnail" alt="avatar" />
+              <h6>Upload a different photo...</h6>
+              <input type="file" className="text-center center-block file-upload" />
+            </div><br />
+            <div className="panel panel-default">
+              <div className="panel-heading">Activity <i className="fa fa-dashboard fa-1x" /></div>
+              <div className="panel-body">
+                <div className=" text-right"><span className="pull-left"><strong>Order</strong></span> 125</div>
+              </div>
             </div>
-        </div>
-        <div className="history-inv">
-            <div className="container">
-                <div className="row">
-                <div className="col-lg-12">
-                    <div className="panel panel-default">
-                    <div className="panel-heading">
-                        History Invoice
-                    </div>
-                    {/* /.panel-heading */}
-                    <div className="panel-body">
-                        <div className="dataTable_wrapper">
-                        <table className="table table-striped table-bordered table-hover" id="dataTables-example">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr className="odd gradeX">
-                                <td>1</td>
-                                <td>INV0003</td>
-                                <td>$25.00</td>
-                                <td>1</td>
-                            </tr>
-                            <tr className="even gradeC">
-                                <td>2</td>
-                                <td>INV0009</td>
-                                <td>$25.00</td>
-                                <td>1</td>
-                            </tr>   
-                            </tbody>
-                        </table>
-                        </div>
-                        {/* /.table-responsive */}
-                    </div>
-                    {/* /.panel-body */}
-                    </div>
-                    {/* /.panel */}
-                </div>
-                {/* /.col-lg-12 */}
-                </div>
-                {/* /.row */}
+          </div>
+          <div className="col-sm-9">
+            <ul className="nav nav-tabs">
+              <li className="active"><a data-toggle="tab" href="#home">Profile</a></li>
+              <li><a data-toggle="tab" href="#history">History Invoice</a></li>
+            </ul>
+            <div className="tab-content">
+              {akun}
             </div>
+          </div>
         </div>
       </div>
-    );
+              
+    )
   }
 }
-
-export default Profile;

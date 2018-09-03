@@ -9,15 +9,15 @@ class HeaderLogin extends Component {
 
   state = {
     data: [],
+    mycookie: cookies.get('userID'),
     namaDepan: '',
     namaBelakang: '',
     status: false
   }
 
-  componentDidMount(){
-    var mycookie = cookies.get('userID');
+  componentWillMount(){
     axios.post('http://localhost:8000/profileuser', {
-      idUser: mycookie
+      userid: this.state.mycookie
     }).then((Response) => {
       var data = Response.data[0];
       this.setState({
@@ -25,12 +25,8 @@ class HeaderLogin extends Component {
         namaBelakang: data.nama_belakang
       })
     })
-  }
-
-  componentWillMount(){
-    var mycookie = cookies.get('userID');
     axios.post('http://localhost:8000/jumlahcart', {
-      userID: mycookie
+      userID: this.state.mycookie
     }).then((ambilData) => {
       this.setState({
         data: ambilData.data

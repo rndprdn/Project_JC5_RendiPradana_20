@@ -10,7 +10,7 @@ class ProductDetails extends Component {
   state = {
     produk: [],
     status: 1,
-    redirec: false
+    redirect: false
   }
 
   componentDidMount(){
@@ -34,7 +34,7 @@ class ProductDetails extends Component {
         var data = ambilData.data;
         if(data === 1){
           this.setState({
-            redirec: true
+            redirect: true
           })
         }
       })
@@ -43,12 +43,11 @@ class ProductDetails extends Component {
         status: 0
       })
     }
-    window.location.reload();
   }
 
   render() {
 
-    if(this.state.redirec) return <Redirect to="/cart" />
+    if(this.state.redirect) return <Redirect to="/cart" />
 
   const produk = this.state.produk.map((item, index) => {
     var idproduk = item.id;
@@ -103,7 +102,7 @@ class ProductDetails extends Component {
                     </div>
                     <hr />
                     <button onClick={() => this.toCO(idproduk)} className="btn btn-md btn-success"><Link to="/checkout" className="to-cart"><span className="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy now  </Link></button>&nbsp;
-                    <button onClick={() => this.toCart(idproduk)} className="btn btn-md btn-danger"><Link to="/cart" className="to-cart"><span className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart  </Link></button>
+                    <button onClick={() => this.toCart(idproduk)} className="btn btn-md btn-danger"><span className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart</button>
                   </article>
                 </aside>
               </div>

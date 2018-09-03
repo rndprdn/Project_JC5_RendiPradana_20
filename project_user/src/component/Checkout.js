@@ -14,7 +14,8 @@ class Checkout extends Component {
     delivery: [],
     grandTotal: 0,
     shipping: 10000,
-    redirect: false
+    redirect: false,
+    warning: ''
   }
 
   componentDidMount(){
@@ -30,9 +31,8 @@ class Checkout extends Component {
       })
       var Alltotal = 0;
       var listPrice = this.state.subtotal
-      for (var i=0; i<listPrice.length; i++)
-      {
-          Alltotal = Alltotal + listPrice[i].subTotalPrice
+      for (var i=0; i<listPrice.length; i++){
+        Alltotal = Alltotal + listPrice[i].subTotalPrice
       }
       
       this.setState({
@@ -59,6 +59,10 @@ class Checkout extends Component {
       if(ambilData.data === 1){
         this.setState({
           redirect: true
+        })
+      } else if(ambilData.data === 5){
+        this.setState({
+          warning: 'ISI SEMUA KOLOM DENGAN BENAR!'
         })
       }
     })
@@ -114,6 +118,7 @@ class Checkout extends Component {
               <div className="row cart-body">
                   <form className="form-horizontal">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
+                    {this.state.warning}
                       <div className="panel panel-default">
                         <div className="panel-heading">
                             Review Order <div className="pull-right"><small><Link to="/cart" className="afix-1">Edit Cart</Link></small></div>
